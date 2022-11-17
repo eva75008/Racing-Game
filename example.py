@@ -11,6 +11,6 @@ class App:
 
     def draw(self):
         pyxel.cls(0)
-        pyxel.rect(self.x, 0, 8, 8, 9)
+        pyxel.rect(self.x, self.x, 8, 8, 12)
 
 App()
