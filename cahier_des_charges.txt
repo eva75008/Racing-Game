@@ -1,7 +1,0 @@
-----> jeu
-
-
-----> background
-
-
-----> voiture
