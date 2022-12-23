@@ -4,90 +4,113 @@ import pyxel
 class Game:
     def __init__(self):
         pyxel.init(720, 480, title="Retro-racing Game", fps=60)
-        pyxel.load("graphics.pyxres")
+        # pyxel.load("graphics.pyxres")
         self.road = Road()
+        self.milestone = Milestones()
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        pass
+        # make milestones move
+        self.milestone.update()
 
     def draw(self):
-        pyxel.cls(12)
+        pyxel.cls(pyxel.COLOR_LIME)
         self.road.draw()
+        self.milestone.draw()
 
 
 class Road:
     def __init__(self):
-        self.width1 = -50
-        self.width2 = pyxel.width + 50
-        self.milestone = Milestone()
+        self.convergent_point = [pyxel.width / 2, 200]
+        self.overflow_x = 200
+        self.line_thickness = 40
+        self.end_road = pyxel.height / 2
 
     def createRoad(self):
         pyxel.tri(
-            self.width1,
+            -self.overflow_x,
             pyxel.height,
-            self.width2,
+            pyxel.width + self.overflow_x,
             pyxel.height,
-            pyxel.width / 2,
-            -200,
-            13,
+            self.convergent_point[0],
+            self.convergent_point[1],
+            pyxel.COLOR_GRAY,
         )
 
     def outlineRoad(self):
-        for x in range(80):
-            pyxel.trib(
-                self.width1,
-                pyxel.height + x,
-                self.width2,
-                pyxel.height + x,
-                pyxel.width / 2,
-                -200,
-                7,
-            )
+        for n in range(2):
+            for x in range(self.line_thickness):
+                pyxel.line(
+                    -self.overflow_x if n else pyxel.width + self.overflow_x,
+                    pyxel.height + x,
+                    self.convergent_point[0],
+                    self.convergent_point[1],
+                    pyxel.COLOR_WHITE,
+                )
 
-    def roadLines(self):
-        for x in range(200):
-            pyxel.trib(
-                self.width1,
-                pyxel.height + x + 1400,
-                self.width2,
-                pyxel.height + x + 1400,
-                pyxel.width / 2,
-                -200,
-                7,
-            )
+    def createLanes(self):
+        for n in range(1, 3):
+            for x in range(self.line_thickness):
+                pyxel.line(
+                    pyxel.width / 3 * n
+                    + (self.line_thickness if n == 2 else -self.line_thickness),
+                    pyxel.height + x,
+                    self.convergent_point[0],
+                    self.convergent_point[1],
+                    pyxel.COLOR_WHITE,
+                )
 
     def draw(self):
         self.createRoad()
         self.outlineRoad()
-        self.roadLines()
-        self.milestone.draw()
+        self.createLanes()
+        pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)
 
 
-class Milestone:
+class Milestones(Road):
     def __init__(self):
-        self.margin_top = 20
-        self.spacing = 70
-        self.slope = 0.54
+        self.difference = pyxel.width - 10
+        self.height = 35
+        self.width = 8
+        super().__init__()
 
-    def invertDirection(self, y):
-        return abs(y - pyxel.height)
+    def update(self):
+        # make the milestones move in the direction of the road
+        pass
+
+    def f(self, x):
+        return (
+            (x - self.convergent_point[0])
+            / (-self.overflow_x - self.convergent_point[0])
+        ) * (pyxel.height - self.convergent_point[1]) + self.convergent_point[1]
+
+    def g(self, x):
+        return (
+            (x - self.convergent_point[0])
+            / (pyxel.width + self.overflow_x - self.width - 10 - self.convergent_point[0])
+        ) * (pyxel.height - self.convergent_point[1]) + self.convergent_point[1]
+
+    def right(self):
+        x = pyxel.width - 10 - self.width
+        while x > 440:
+            y = self.g(x)
+            pyxel.rect(x, y - self.height, self.width, self.height, pyxel.COLOR_RED)
+            # pyxel.rect(x, y, 10 - x / 30, 60 - x / 6, pyxel.COLOR_RED)
+            pyxel.rect(x, y - self.height + 4, 8, 5, pyxel.COLOR_WHITE)
+            x -= 1
+
+    def left(self):
+        x = 10
+        while x < 280:
+            y = self.f(x)
+            pyxel.rect(x, y - self.height, self.width, self.height, pyxel.COLOR_RED)
+            # pyxel.rect(x, y, 10 - x / 30, 60 - x / 6, pyxel.COLOR_RED)
+            pyxel.rect(x, y - self.height + 4, 8, 5, pyxel.COLOR_WHITE)
+            x += 1
 
     def draw(self):
-        for x in range(2):
-            for y in range(self.margin_top, pyxel.height, self.spacing):
-                pyxel.blt(
-                    x=self.invertDirection(y) * self.slope - 43
-                    if x == 1
-                    else y * self.slope + 495,
-                    y=y,
-                    img=1,
-                    u=7,
-                    v=0,
-                    w=10,
-                    h=40,
-                    colkey=0,
-                )
+        self.right()
+        self.left()
 
 
 Game()
