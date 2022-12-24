@@ -1,5 +1,7 @@
 import pyxel
 
+difference = 8
+
 
 class Game:
     def __init__(self):
@@ -69,44 +71,37 @@ class Road:
 
 class Milestones(Road):
     def __init__(self):
-        self.difference = pyxel.width - 10
         self.height = 35
         self.width = 8
+        self.start = 10
         super().__init__()
 
     def update(self):
-        # make the milestones move in the direction of the road
+        # make the milestones move
         pass
 
-    def f(self, x):
-        return (
-            (x - self.convergent_point[0])
-            / (-self.overflow_x - self.convergent_point[0])
-        ) * (pyxel.height - self.convergent_point[1]) + self.convergent_point[1]
-
-    def g(self, x):
-        return (
-            (x - self.convergent_point[0])
-            / (pyxel.width + self.overflow_x - self.width - 10 - self.convergent_point[0])
-        ) * (pyxel.height - self.convergent_point[1]) + self.convergent_point[1]
-
     def right(self):
-        x = pyxel.width - 10 - self.width
-        while x > 440:
-            y = self.g(x)
+        x = pyxel.width - self.start - difference
+        while x > 433:
+            y = (
+                (x - self.convergent_point[0] + self.width)
+                / (pyxel.width + self.overflow_x - self.convergent_point[0])
+            ) * (pyxel.height - self.convergent_point[1]) + self.convergent_point[1]
+
             pyxel.rect(x, y - self.height, self.width, self.height, pyxel.COLOR_RED)
-            # pyxel.rect(x, y, 10 - x / 30, 60 - x / 6, pyxel.COLOR_RED)
             pyxel.rect(x, y - self.height + 4, 8, 5, pyxel.COLOR_WHITE)
-            x -= 1
+            x -= 25
 
     def left(self):
-        x = 10
+        x = self.start
         while x < 280:
-            y = self.f(x)
+            y = (
+                (x - self.convergent_point[0])
+                / (-self.overflow_x - self.convergent_point[0])
+            ) * (pyxel.height - self.convergent_point[1]) + self.convergent_point[1]
             pyxel.rect(x, y - self.height, self.width, self.height, pyxel.COLOR_RED)
-            # pyxel.rect(x, y, 10 - x / 30, 60 - x / 6, pyxel.COLOR_RED)
             pyxel.rect(x, y - self.height + 4, 8, 5, pyxel.COLOR_WHITE)
-            x += 1
+            x += 25
 
     def draw(self):
         self.right()
