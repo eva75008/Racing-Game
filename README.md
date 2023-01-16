@@ -13,5 +13,4 @@ Le but est de faire un score le plus élevé possible.
 le joueur a comme véhicules :
   - une moto
   - une voiture
- 
  il a la possibilité de circuler entre trois voies de circulation pour esquiver les objets.
