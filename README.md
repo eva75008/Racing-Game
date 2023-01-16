@@ -13,7 +13,7 @@ Le but est de faire un score le plus élevé possible.
 le joueur a comme véhicules :
   - une moto
   - une voiture <br>
- il a la possibilité de circuler entre trois voies de circulation pour esquiver les objets.
+Il a la possibilité de circuler entre trois voies de circulation pour esquiver les objets.
 
 Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur.
 Il y a comme objets des :
