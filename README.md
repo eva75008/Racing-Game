@@ -7,7 +7,7 @@
 
 Cahier des charges :
 
-Jeu type retro de voiture qui esquive des objets.<br>
+Utilisation de la bibliothèque pyxel pour créer un jeu type retro de voiture qui esquive des objets.<br>
 Le but est de faire un score le plus élevé possible.
 
 le joueur a comme véhicules :
