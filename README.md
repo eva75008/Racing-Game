@@ -17,7 +17,7 @@ Il a la possibilité de circuler entre trois voies de circulation pour esquiver 
 
 Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur.
 Il y a comme objets des :
-  - Plots
+  - Plot
   - arbres
   - Balises
   - Tonneaux
