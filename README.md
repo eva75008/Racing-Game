@@ -14,3 +14,13 @@ le joueur a comme véhicules :
   - une moto
   - une voiture <br>
  il a la possibilité de circuler entre trois voies de circulation pour esquiver les objets.
+
+Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur.
+Il y a comme objets des :
+  - Plots
+  - arbres
+  - Balises
+  - Tonneaux
+  - cailloux
+
+Et le ciel qui accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change.
