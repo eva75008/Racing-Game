@@ -8,7 +8,7 @@
 Cahier des charges :
 
 Utilisation de la bibliothèque pyxel pour créer un jeu type retro de voiture qui esquive des objets.<br>
-Le but est de faire un score le plus élevé possible.
+Le but est de faire un score le plus élevé possible. Le score évolue avec la distance parcourue.
 
 le joueur a comme véhicules :
   - une moto
@@ -24,3 +24,4 @@ Il y a comme objets des :
   - cailloux
 
 Le ciel accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change selon le temps.   ---> Possibilité de mettre des phares sur les véhicules
+
