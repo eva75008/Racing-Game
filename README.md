@@ -7,7 +7,7 @@
 
 Cahier des charges :
 
-Jeu type retro de voiture qui esquive des objets
+Jeu type retro de voiture qui esquive des objets.<br>
 Le but est de faire un score le plus élevé possible.
 
 le joueur a comme véhicules :
