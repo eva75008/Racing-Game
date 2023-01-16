@@ -23,4 +23,4 @@ Il y a comme objets des :
   - Tonneaux
   - cailloux
 
-Et le ciel qui accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change.
+Le ciel accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change selon le temps.   ---> Possibilité de mettre des phares sur les véhicules
