@@ -5,7 +5,8 @@
 
 *To edit ressource online click [here](https://kitao.github.io/pyxel/wasm/launcher/?edit=rattlessnake.retro-racing-game.graphics).*
 
-Cahier des charges :
+
+Cahier des charges du jeu :
 
 Utilisation de la bibliothèque pyxel pour créer un jeu type retro de voiture qui esquive des objets.<br>
 Le but est de faire un score le plus élevé possible. Le score évolue avec la distance parcourue.
