@@ -15,7 +15,7 @@ le joueur a comme véhicules :
   - une voiture <br>
 Il a la possibilité de bouger entre trois voies de circulation pour esquiver les objets.
 
-Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur.
+Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur en fonction du temps, plus ou moins vite selon le score.
 Il y a comme objets des :
   - Plots
   - arbres
