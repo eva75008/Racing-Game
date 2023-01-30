@@ -53,6 +53,7 @@ class Daynight:
         pyxel.blt(x=self.systemposx, y=100, img=0, u=self.u, v=self.v, w=22, h=22, colkey=0)
         
     def draw(self):
+        pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY)
         self.systeme()
 
         #pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)   #culeur bleu du ciel
@@ -115,7 +116,7 @@ class Road:
         self.createRoad()
         self.outlineRoad()
         self.createLanes()
-        pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)   #culeur bleu du ciel
+   #culeur bleu du ciel
 
 
 class Milestones(Road):
