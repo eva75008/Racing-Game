@@ -27,4 +27,4 @@ Il y a comme objets des :
 Le ciel accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change selon le temps.   ---> Possibilité de mettre des phares sur les véhicules
 
 
-projet : https://www.pyxelstudio.net/studio/h65auydj
+ <!--projet : https://www.pyxelstudio.net/studio/h65auydj -->
