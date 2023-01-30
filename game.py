@@ -65,6 +65,10 @@ class Road:
         self.createRoad()
         self.outlineRoad()
         self.createLanes()
+        
+        pyxel.circ(self.convergent_point[0], self.convergent_point[1], 8, 0)
+        pyxel.circ(self.convergent_point[0] - 2, self.convergent_point[1] - 2, 2, 7)
+        
         pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)
 
 
