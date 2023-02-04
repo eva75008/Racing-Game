@@ -31,6 +31,7 @@ class Game:
 class Daynight:
     def __init__(self):
         self.systemposx = 1
+        self.systemposy = 100
         self.u = 6
         self.v = 22
         self.end_road = pyxel.height / 2
@@ -38,6 +39,7 @@ class Daynight:
         
     def systeme(self):
         self.systemposx += 1
+        self.systemposy = -(pyxel.sin((180*self.systemposx)/720))*200+215
         if self.systemposx >= 720:
             self.day =  not self.day
             if self.day:
@@ -50,7 +52,7 @@ class Daynight:
                 self.v = 44
         
             
-        pyxel.blt(x=self.systemposx, y=100, img=0, u=self.u, v=self.v, w=22, h=22, colkey=0)
+        pyxel.blt(x=self.systemposx, y=self.systemposy, img=0, u=self.u, v=self.v, w=22, h=22, colkey=0)
         
     def draw(self):
         pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY)
