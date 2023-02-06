@@ -30,9 +30,9 @@ Il y a comme objets des :
 
 Le ciel accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change selon le temps.   ---> Possibilité de mettre des phares sur les véhicules
 
-06/02/2023 : Fonction Jour / Nuit terminées
+06/02/2023 : Fonction Jour / Nuit terminée
 
-Objectifs pour le 27/02/2023 : Finir les graphiques des véhicules, les intégrer au jeu et comencer les déplacements ( interactions joueurs-machine)
+Objectifs pour le 27/02/2023 : Finir les graphiques des véhicules, les intégrer au jeu et commencer les déplacements ( interactions joueurs-machine)
 
 
 
