@@ -29,6 +29,11 @@ class Game:
 
 
 class Daynight:
+    """
+    Création d'un cycle jour / nuit en fonction du temps.
+    Déplacement du Soleil ou de la Lune suivant une fonction sinus sur la largeur de l'écran.
+    Le Soleil et la Lune sont cherchés dans la ressource dans l'image 0.
+    """
     def __init__(self):
         self.systemposx = 1
         self.systemposy = 100
