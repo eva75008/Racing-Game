@@ -25,7 +25,7 @@ class Game:
         
         
         
-       # pyxel.blt(x=100, y=100, img=1, u=7, v=0, w=10, h=40, colkey=0)
+       pyxel.blt(x=100, y=100, img=1, u=7, v=0, w=10, h=40, colkey=0)
 
 
 class Daynight:
