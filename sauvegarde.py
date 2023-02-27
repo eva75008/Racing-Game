@@ -61,7 +61,6 @@ class Daynight:
         
     def draw(self):
         pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY)
-        pyxel.blt(x=312, y=320, img=2, u=16, v=8, w=96, h=152, colkey=14)
         self.systeme()
 
         #pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)   #culeur bleu du ciel
