@@ -34,8 +34,10 @@ Le ciel accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change
 
 Objectifs pour le 27/02/2023 : Finir les graphiques des véhicules, les intégrer au jeu et commencer les déplacements ( interactions joueurs-machine)
 
+Objectif pour le 09/03/23 finir la voiture et terminer les interactions homme -> machine
 
 
+Idées : delay lors du changement de file + clignotant lors de l'action
 
  <!--projet : https://www.pyxelstudio.net/studio/h65auydj -->
  <!-- https://www.pyxelstudio.net/studio/sluj96ez -->    
