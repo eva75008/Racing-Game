@@ -4,28 +4,60 @@ import pyxel
 class Game:
     def __init__(self):
         pyxel.init(720, 480, title="Retro-racing Game", fps=60)
-        pyxel.load("pyressource(2).pyxres")
+        pyxel.load("pyressource.pyxres")
         self.road = Road()
         self.milestone = Milestones()
         self.daynight = Daynight()
+        self.player = Player()
         pyxel.run(self.update, self.draw)
 
     def update(self):
         # make milestones move
+        self.player.control()
         self.daynight.systeme()
         self.milestone.update()
-
 
     def draw(self):
         pyxel.cls(pyxel.COLOR_LIME)
         self.road.draw()
-        self.daynight.draw()
         self.milestone.draw()
+        self.daynight.draw()
+        self.player.draw()
 
-        
-        
-        
-       pyxel.blt(x=100, y=100, img=1, u=7, v=0, w=10, h=40, colkey=0)
+        # pyxel.blt(x=100, y=100, img=1, u=7, v=0, w=10, h=40, colkey=0)
+
+
+class Player:
+    def __init__(self):
+        self.x = pyxel.width / 2 - 95 / 2
+        self.y = pyxel.height - 150
+        self.width = 95
+        self.height = 150
+
+    def control(self):
+        right = pyxel.width - self.width * 2
+        middle = pyxel.width / 2 - self.width / 2
+        left = self.width
+        if pyxel.btnp(pyxel.KEY_RIGHT):
+            if self.x == middle:
+                self.x = right
+            if self.x == right:
+                self.x = right
+            if self.x == left:
+                self.x = middle
+        if pyxel.btnp(pyxel.KEY_LEFT):
+            if self.x == middle:
+                self.x = left
+            if self.x == left:
+                self.x = left
+            if self.x == right:
+                self.x = middle
+
+    def update(self):
+        self.control()
+
+    def draw(self):
+        pyxel.blt(x=self.x, y=self.y, img=2, u=16, v=10, w=95, h=149, colkey=14)
 
 
 class Daynight:
@@ -34,6 +66,7 @@ class Daynight:
     Déplacement du Soleil ou de la Lune suivant une fonction sinus sur la largeur de l'écran.
     Le Soleil et la Lune sont cherchés dans la ressource dans l'image 0.
     """
+
     def __init__(self):
         self.systemposx = 1
         self.systemposy = 100
@@ -41,12 +74,12 @@ class Daynight:
         self.v = 22
         self.end_road = pyxel.height / 2
         self.day = True
-        
+
     def systeme(self):
         self.systemposx += 1
-        self.systemposy = -(pyxel.sin((180*self.systemposx)/720))*200+215
+        self.systemposy = -(pyxel.sin((180 * self.systemposx) / 720)) * 200 + 215
         if self.systemposx >= 720:
-            self.day =  not self.day
+            self.day = not self.day
             if self.day:
                 self.systemposx = 1
                 self.u = 6
@@ -55,27 +88,30 @@ class Daynight:
                 self.systemposx = 1
                 self.u = 6
                 self.v = 44
-        
-            
-        pyxel.blt(x=self.systemposx, y=self.systemposy, img=0, u=self.u, v=self.v, w=22, h=22, colkey=0)
-        
+
+        pyxel.blt(
+            x=self.systemposx,
+            y=self.systemposy,
+            img=0,
+            u=self.u,
+            v=self.v,
+            w=22,
+            h=22,
+            colkey=0,
+        )
+
     def draw(self):
-        pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY)
+        pyxel.rect(
+            0,
+            0,
+            pyxel.width,
+            self.end_road,
+            pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY,
+        )
+
         self.systeme()
 
-        #pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)   #culeur bleu du ciel
-
-
-
-
-
-
-
-
-
-
-
-
+        # pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)   #culeur bleu du ciel
 
 
 class Road:
@@ -123,7 +159,11 @@ class Road:
         self.createRoad()
         self.outlineRoad()
         self.createLanes()
-   #culeur bleu du ciel
+
+        pyxel.circ(self.convergent_point[0], self.convergent_point[1], 8, 0)
+        pyxel.circ(self.convergent_point[0] - 2, self.convergent_point[1] - 2, 2, 7)
+
+        pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)
 
 
 class Milestones(Road):
