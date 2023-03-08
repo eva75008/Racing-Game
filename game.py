@@ -4,7 +4,7 @@ import pyxel
 class Game:
     def __init__(self):
         pyxel.init(720, 480, title="Retro-racing Game", fps=60)
-        pyxel.load("graphics.pyxres")
+        pyxel.load("graphcs.pyxres")
         self.road = Road()
         self.milestone = Milestones()
         self.daynight = Daynight()
@@ -81,25 +81,34 @@ class Player:
         self.x = pyxel.width / 2 - 95 / 2
         self.width = 95
         self.height = 150
+        self.time = 0
+        self.delta = 0
+
 
     def control(self):
         right = pyxel.width - self.width * 2
         middle = pyxel.width / 2 - self.width / 2
         left = self.width
-        if pyxel.btnp(pyxel.KEY_RIGHT):
-            if self.x == middle:
-                self.x = right
-            if self.x == right:
-                self.x = right
-            if self.x == left:
-                self.x = middle
-        if pyxel.btnp(pyxel.KEY_LEFT):
-            if self.x == middle:
-                self.x = left
-            if self.x == left:
-                self.x = left
-            if self.x == right:
-                self.x = middle
+        self.time += 1
+
+
+        if self.time >= self.delta + 45:   #permet d'imposer un delay de 45/60s avant de se deplacer
+            if pyxel.btnp(pyxel.KEY_RIGHT):
+                self.delta = self.time
+                if self.x == middle:
+                    self.x = right
+                if self.x == right:
+                    self.x = right
+                if self.x == left:
+                    self.x = middle
+            if pyxel.btnp(pyxel.KEY_LEFT):
+                self.delta = self.time
+                if self.x == middle:
+                    self.x = left
+                if self.x == left:
+                    self.x = left
+                if self.x == right:
+                    self.x = middle
 
     def update(self):
         self.control()
@@ -242,3 +251,4 @@ class Milestones(Road):
 
 
 Game()
+Footer
