@@ -94,7 +94,7 @@ class Player:
 
         if self.time >= self.delta + 45:   #permet d'imposer un delay de 45/60s avant de se deplacer
             if pyxel.btnp(pyxel.KEY_RIGHT):
-                self.delta = self.time
+                self.delta = self.time   #la variable delta prend la valeur actuelle du temps
                 if self.x == middle:
                     self.x = right
                 if self.x == right:
@@ -102,7 +102,7 @@ class Player:
                 if self.x == left:
                     self.x = middle
             if pyxel.btnp(pyxel.KEY_LEFT):
-                self.delta = self.time
+                self.delta = self.time  #la variable delta prend la valeur actuelle du temps
                 if self.x == middle:
                     self.x = left
                 if self.x == left:
@@ -114,6 +114,9 @@ class Player:
         self.control()
 
     def draw(self):
+        """
+        affiche la moto en x y par l'image en ressource en u v de taille w h et couleur transparente : 14
+        """
         pyxel.blt(
             x=self.x,
             y=pyxel.height - self.height,
