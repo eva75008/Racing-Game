@@ -83,6 +83,7 @@ class Player:
         self.height = 150
         self.time = 0
         self.delta = 0
+        self.mouvement = None
 
 
     def control(self):
@@ -91,19 +92,19 @@ class Player:
         left = self.width
         self.time += 1
         self.dir = middle
-        mouvement = None
+        
 
 
         if self.time >= self.delta + 45:   #permet d'imposer un delay de 45/60s avant de se deplacer
             if pyxel.btnp(pyxel.KEY_RIGHT):
-                mouvement = right
+                self.mouvement = right
                 self.delta = self.time   #la variable delta prend la valeur actuelle du temps
-                if self.x == middle:
+                '''if self.x == middle:
                     self.x = right
                 if self.x == right:
                     self.x = right
                 if self.x == left:
-                    self.x = middle
+                    self.x = middle'''
             if pyxel.btnp(pyxel.KEY_LEFT):
                 self.delta = self.time  #la variable delta prend la valeur actuelle du temps
                 if self.x == middle:
@@ -114,12 +115,13 @@ class Player:
                     self.x = middle
 
     def right(self):
-        self.x +=5
+        while self.x <= right:
+            self.x +=5
                     
                     
                         
     def update(self):
-        mouvement()
+        self.mouvement()
         self.control()
 
     def draw(self):
