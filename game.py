@@ -4,7 +4,7 @@ import pyxel
 class Game:
     def __init__(self):
         pyxel.init(720, 480, title="Retro-racing Game", fps=60)
-        pyxel.load("graphcs.pyxres")
+        pyxel.load("graphics.pyxres")
         self.road = Road()
         self.milestone = Milestones()
         self.daynight = Daynight()
