@@ -83,7 +83,7 @@ class Player:
         self.height = 150
         self.time = 0
         self.delta = 0
-        self.mouvement = None
+        
 
 
     def control(self):
