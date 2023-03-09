@@ -113,13 +113,13 @@ class Player:
                 if self.x == right:
                     self.x = middle
 
-    def right(self, dir):
-        self. +=5
+    def right(self):
+        self.x +=5
                     
                     
                         
     def update(self):
-        mouvement(dir)
+        mouvement()
         self.control()
 
     def draw(self):
