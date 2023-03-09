@@ -39,6 +39,8 @@ Objectif pour le 09/03/23 finir la voiture et terminer les interactions homme ->
 
 Idées : delay lors du changement de file + clignotant lors de l'action
 
+Difficultés à créer un changement de file lent et "lisse"
+
  <!--projet : https://www.pyxelstudio.net/studio/h65auydj -->
  <!-- https://www.pyxelstudio.net/studio/sluj96ez -->    
  <!-- https://www.pyxelstudio.net/studio/n65wcdf2 -->
