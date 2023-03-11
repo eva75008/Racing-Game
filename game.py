@@ -1,5 +1,7 @@
 import pyxel
 
+# & C:/Users/rattleSSnake/AppData/Local/Microsoft/WindowsApps/python3.10.exe -m pyxel edit c:/Users/rattleSSnake/personnal/retro-racing-game/graphics.pyxres
+
 
 class Game:
     def __init__(self):
@@ -81,50 +83,39 @@ class Player:
         self.x = pyxel.width / 2 - 95 / 2
         self.width = 95
         self.height = 150
-        self.time = 0
-        self.delta = 0
-
 
     def control(self):
         right = pyxel.width - self.width * 2
         middle = pyxel.width / 2 - self.width / 2
         left = self.width
-        self.time += 1
 
-
-        if self.time >= self.delta + 45:   #permet d'imposer un delay de 45/60s avant de se deplacer
-            if pyxel.btnp(pyxel.KEY_RIGHT):
-                self.delta = self.time   #la variable delta prend la valeur actuelle du temps
-                if self.x == middle:
-                    self.x = right
-                if self.x == right:
-                    self.x = right
-                if self.x == left:
-                    self.x = middle
-            if pyxel.btnp(pyxel.KEY_LEFT):
-                self.delta = self.time  #la variable delta prend la valeur actuelle du temps
-                if self.x == middle:
-                    self.x = left
-                if self.x == left:
-                    self.x = left
-                if self.x == right:
-                    self.x = middle
+        if pyxel.btnp(pyxel.KEY_RIGHT):
+            if self.x == middle:
+                self.x = right
+            if self.x == right:
+                self.x = right
+            if self.x == left:
+                self.x = middle
+        if pyxel.btnp(pyxel.KEY_LEFT):
+            if self.x == middle:
+                self.x = left
+            if self.x == left:
+                self.x = left
+            if self.x == right:
+                self.x = middle
 
     def update(self):
         self.control()
 
     def draw(self):
-        """
-        affiche la moto en x y par l'image en ressource en u v de taille w h et couleur transparente : 14
-        """
         pyxel.blt(
             x=self.x,
             y=pyxel.height - self.height,
             img=2,
             u=16,
             v=10,
-            w=95,
-            h=149,
+            w=self.width,
+            h=self.height,
             colkey=14,
         )
 
@@ -254,4 +245,3 @@ class Milestones(Road):
 
 
 Game()
-Footer
