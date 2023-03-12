@@ -2,8 +2,6 @@ import pyxel
 import math
 import random
 
-# & C:/Users/rattleSSnake/AppData/Local/Microsoft/WindowsApps/python3.10.exe -m pyxel edit c:/Users/rattleSSnake/personnal/retro-racing-game/graphics.pyxres
-
 
 class Game:
     def __init__(self):
