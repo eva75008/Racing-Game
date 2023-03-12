@@ -1,4 +1,6 @@
 import pyxel
+import math
+import random
 
 # & C:/Users/rattleSSnake/AppData/Local/Microsoft/WindowsApps/python3.10.exe -m pyxel edit c:/Users/rattleSSnake/personnal/retro-racing-game/graphics.pyxres
 
@@ -9,19 +11,22 @@ class Game:
         pyxel.load("graphics.pyxres")
         self.road = Road()
         self.milestone = Milestones()
-        self.daynight = Daynight()
+        self.timeOfDay = TimeOfDay()
         self.player = Player()
+        self.ennemies = Ennemies()
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        self.player.control()
-        self.daynight.systeme()
+        self.ennemies.update()
+        self.timeOfDay.update()
         self.milestone.update()
+        self.player.update()
 
     def draw(self):
         pyxel.cls(pyxel.COLOR_LIME)
         self.road.draw()
-        self.daynight.draw()
+        self.ennemies.draw()
+        self.timeOfDay.draw()
         self.milestone.draw()
         self.player.draw()
 
@@ -67,92 +72,63 @@ class Road:
                     pyxel.COLOR_WHITE,
                 )
 
+    def findSlope(self, x0, y0):
+        return (y0 - self.convergent_point[1]) / (x0 - self.convergent_point[0])
+
     def draw(self):
         self.createRoad()
         self.outlineRoad()
         self.createLanes()
 
-        pyxel.circ(self.convergent_point[0], self.convergent_point[1], 8, 0)
-        pyxel.circ(self.convergent_point[0] - 2, self.convergent_point[1] - 2, 2, 7)
 
-        pyxel.rect(0, 0, pyxel.width, self.end_road, pyxel.COLOR_CYAN)
-
-
-class Player:
+class Ennemies(Road):
     def __init__(self):
-        self.x = pyxel.width / 2 - 95 / 2
-        self.width = 95
-        self.height = 150
+        super().__init__()
+        self.x = self.convergent_point[0]
+        self.y = self.convergent_point[1]
+        self.scaling_factor = 0.05
+        self.trajectory = random.choice([-1, 0, 1])
 
-    def control(self):
-        right = pyxel.width - self.width * 2
-        middle = pyxel.width / 2 - self.width / 2
-        left = self.width
+    def calculateRadius(self, y, initial_size):
+        y -= self.convergent_point[1]
+        return self.scaling_factor * y + initial_size
 
-        if pyxel.btnp(pyxel.KEY_RIGHT):
-            if self.x == middle:
-                self.x = right
-            if self.x == right:
-                self.x = right
-            if self.x == left:
-                self.x = middle
-        if pyxel.btnp(pyxel.KEY_LEFT):
-            if self.x == middle:
-                self.x = left
-            if self.x == left:
-                self.x = left
-            if self.x == right:
-                self.x = middle
+    def increaseSpeed(self, y, initial_speed):
+        y -= self.convergent_point[1] - 1
+        return initial_speed * y / 15
 
     def update(self):
-        self.control()
+        self.y += self.increaseSpeed(self.y, 1)
+        self.x += self.trajectory * self.increaseSpeed(self.y, 1)
+        if self.y > pyxel.height + self.calculateRadius(self.y, 5):
+            self.y = self.convergent_point[1]
+            self.x = self.convergent_point[0]
+            self.trajectory = random.choice([-1, 0, 1])
 
     def draw(self):
-        pyxel.blt(
-            x=self.x,
-            y=pyxel.height - self.height,
-            img=2,
-            u=16,
-            v=10,
-            w=self.width,
-            h=self.height,
-            colkey=14,
-        )
+        pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 5), pyxel.COLOR_BLACK)
+        pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 5), pyxel.COLOR_WHITE)
 
 
-class Daynight:
+class TimeOfDay(Road):
     def __init__(self):
-        self.systemposx = 1
-        self.systemposy = 100
-        self.u = 6
-        self.v = 22
-        self.end_road = pyxel.height / 2
+        super().__init__()
+        self.speed = 1
+        self.width = 22
+        self.y = 100
+        self.graphicsPositionX = 22
         self.day = True
 
-    def systeme(self):
-        self.systemposx += 1
-        self.systemposy = -(pyxel.sin((180 * self.systemposx) / 720)) * 200 + 215
-        if self.systemposx >= 720:
+    def update(self):
+        self.speed += 1
+        self.y = 200 * math.sin(-math.pi * self.speed / pyxel.width) + 200
+        if self.speed > pyxel.width:
             self.day = not self.day
+            self.speed = 1
             if self.day:
-                self.systemposx = 1
-                self.u = 6
-                self.v = 22
+                self.graphicsPositionX = 22
             else:
-                self.systemposx = 1
-                self.u = 6
-                self.v = 44
-
-        pyxel.blt(
-            x=self.systemposx,
-            y=self.systemposy,
-            img=0,
-            u=self.u,
-            v=self.v,
-            w=22,
-            h=22,
-            colkey=0,
-        )
+                self.graphicsPositionX = 44
 
     def draw(self):
         pyxel.rect(
@@ -162,8 +138,9 @@ class Daynight:
             self.end_road,
             pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY,
         )
-
-        self.systeme()
+        pyxel.blt(
+            self.speed, self.y, 0, 6, self.graphicsPositionX, 22, 22, pyxel.COLOR_BLACK
+        )
 
 
 class Milestones(Road):
@@ -176,9 +153,6 @@ class Milestones(Road):
 
     def update(self):
         pass
-
-    def findSlope(self, x0, y0):
-        return (y0 - self.convergent_point[1]) / (x0 - self.convergent_point[0])
 
     def findDistance(self, x0, slope):
         return abs(((slope**2 + 1) ** (1 / 2)) * (x0 - self.convergent_point[0]))
@@ -242,6 +216,45 @@ class Milestones(Road):
     def draw(self):
         self.right()
         self.left()
+
+
+class Player:
+    def __init__(self):
+        self.x = pyxel.width / 2 - 95 / 2
+        self.width = 95
+        self.height = 150
+
+    def update(self):
+        right = pyxel.width - self.width * 2
+        middle = pyxel.width / 2 - self.width / 2
+        left = self.width
+
+        if pyxel.btnp(pyxel.KEY_RIGHT):
+            if self.x == middle:
+                self.x = right
+            if self.x == right:
+                self.x = right
+            if self.x == left:
+                self.x = middle
+        if pyxel.btnp(pyxel.KEY_LEFT):
+            if self.x == middle:
+                self.x = left
+            if self.x == left:
+                self.x = left
+            if self.x == right:
+                self.x = middle
+
+    def draw(self):
+        pyxel.blt(
+            x=self.x,
+            y=pyxel.height - self.height,
+            img=2,
+            u=16,
+            v=10,
+            w=self.width,
+            h=self.height,
+            colkey=pyxel.COLOR_PINK,
+        )
 
 
 Game()
