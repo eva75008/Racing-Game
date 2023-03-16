@@ -228,7 +228,7 @@ class Player:
         right = pyxel.width - self.width * 2
         middle = pyxel.width / 2 - self.width / 2
         left = self.width
-        positions = [self.width, 240, pyxel.width / 2 - self.width / 2, 450, pyxel.width - self.width * 2 ]
+        positions = [self.width, 200, pyxel.width / 2 - self.width / 2, 425, pyxel.width - self.width * 2 ]
 
 
         if pyxel.btnp(pyxel.KEY_RIGHT):
