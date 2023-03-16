@@ -221,16 +221,15 @@ class Player:
         self.x = pyxel.width / 2 - 95 / 2
         self.width = 95
         self.height = 150
+	#position du joueur dans la liste des positions possibles
         self.playerposition = 2
 	
 
     def update(self):
-        right = pyxel.width - self.width * 2
-        middle = pyxel.width / 2 - self.width / 2
-        left = self.width
+        #definition des positions possibles du joueur
         positions = [self.width, 200, pyxel.width / 2 - self.width / 2, 425, pyxel.width - self.width * 2 ]
 
-
+	#lorqu'un touche 'flèche' est appuyée, le joueur passe à la position possible la plus proche
         if pyxel.btnp(pyxel.KEY_RIGHT):
             if self.playerposition < 4: 
                 self.playerposition += 1
@@ -251,6 +250,9 @@ class Player:
             h=self.height,
             colkey=pyxel.COLOR_PINK,
         )
+
+
+
 
 
 Game()
