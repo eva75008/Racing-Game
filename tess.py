@@ -221,22 +221,24 @@ class Player:
         self.x = pyxel.width / 2 - 95 / 2
         self.width = 95
         self.height = 150
-	self.playerposition = 2
+        self.playerposition = 2
 	
 
     def update(self):
         right = pyxel.width - self.width * 2
         middle = pyxel.width / 2 - self.width / 2
         left = self.width
-	positions = [self.width, (self.width+pyxel.width)/2 - - self.width / 2, pyxel.width / 2 - self.width / 2, pyxel.width - self.width * 3, pyxel.width - self.width * 2 ]
+        positions = [self.width, 240, pyxel.width / 2 - self.width / 2, 450, pyxel.width - self.width * 2 ]
 
 
         if pyxel.btnp(pyxel.KEY_RIGHT):
-		if playerposition < 4: 
-         	   self.x = position[self.playerposition+1]
+            if self.playerposition < 4: 
+                self.playerposition += 1
+                self.x = positions[self.playerposition]
         if pyxel.btnp(pyxel.KEY_LEFT):
-		if playerposition > 0: 
-         	   self.x = position[self.playerposition-1]
+            if self.playerposition > 0: 
+                self.playerposition += -1
+                self.x = positions[self.playerposition]
 
     def draw(self):
         pyxel.blt(
