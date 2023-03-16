@@ -1,1 +1,5 @@
 Assemblage des différents fichiers graphiques crées
+
+pyxelresource   :    img0  ==>  Soleil + Lune
+                     img1  ==>  Arbres + Plot
+                     img2  ==>  moto
