@@ -41,6 +41,12 @@ Idées : delay lors du changement de file + clignotant lors de l'action
 
 Difficultés à créer un changement de file lent et "lisse"
 
+16/03/2023 :   création des 5 positions possibles pour le déplacement
+               amélioration du scale factorisator
+
+
+
+
  <!--projet : https://www.pyxelstudio.net/studio/h65auydj -->
  <!-- https://www.pyxelstudio.net/studio/sluj96ez -->    
  <!-- https://www.pyxelstudio.net/studio/n65wcdf2 -->
