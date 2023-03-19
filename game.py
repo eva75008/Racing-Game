@@ -3,19 +3,24 @@ import math
 import random
 
 
+screen_width = 720
+screen_height = 480
+convergence = [screen_width / 2, 200]
+sky_height = screen_height / 2
+
+
 class Game:
     def __init__(self):
-        pyxel.init(720, 480, title="Retro-racing Game", fps=60)
+        pyxel.init(screen_width, screen_height, "Retro-racing Game", 60)
         pyxel.load("graphics.pyxres")
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
         self.player = Player()
-        self.ennemies = Ennemies()
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        self.ennemies.update()
+        self.road.update()
         self.timeOfDay.update()
         self.milestone.update()
         self.player.update()
@@ -23,27 +28,25 @@ class Game:
     def draw(self):
         pyxel.cls(pyxel.COLOR_LIME)
         self.road.draw()
-        self.ennemies.draw()
         self.timeOfDay.draw()
         self.milestone.draw()
         self.player.draw()
 
 
 class Road:
-    def __init__(self):
-        self.convergent_point = [pyxel.width / 2, 200]
-        self.overflow_x = 200
-        self.line_thickness = 40
-        self.end_road = pyxel.height / 2
+    def __init__(self, overflow_x=200, line_thickness=40):
+        self.overflowX = overflow_x
+        self.line_thickness = line_thickness
+        self.enemies = Enemies()
 
     def createRoad(self):
         pyxel.tri(
-            -self.overflow_x,
+            -self.overflowX,
             pyxel.height,
-            pyxel.width + self.overflow_x,
+            pyxel.width + self.overflowX,
             pyxel.height,
-            self.convergent_point[0],
-            self.convergent_point[1],
+            convergence[0],
+            convergence[1],
             pyxel.COLOR_GRAY,
         )
 
@@ -51,10 +54,10 @@ class Road:
         for n in range(2):
             for x in range(self.line_thickness):
                 pyxel.line(
-                    -self.overflow_x if n else pyxel.width + self.overflow_x,
+                    -self.overflowX if n else pyxel.width + self.overflowX,
                     pyxel.height + x,
-                    self.convergent_point[0],
-                    self.convergent_point[1],
+                    convergence[0],
+                    convergence[1],
                     pyxel.COLOR_WHITE,
                 )
 
@@ -65,42 +68,41 @@ class Road:
                     pyxel.width / 3 * n
                     + (self.line_thickness if n == 2 else -self.line_thickness),
                     pyxel.height + x,
-                    self.convergent_point[0],
-                    self.convergent_point[1],
+                    convergence[0],
+                    convergence[1],
                     pyxel.COLOR_WHITE,
                 )
 
-    def findSlope(self, x0, y0):
-        return (y0 - self.convergent_point[1]) / (x0 - self.convergent_point[0])
+    def update(self):
+        self.enemies.update()
 
     def draw(self):
         self.createRoad()
         self.outlineRoad()
         self.createLanes()
+        self.enemies.draw()
 
 
-class Ennemies(Road):
+class Enemies:
     def __init__(self):
-        super().__init__()
-        self.x = self.convergent_point[0]
-        self.y = self.convergent_point[1]
+        self.x, self.y = convergence
         self.scaling_factor = 0.05
         self.trajectory = random.choice([-1, 0, 1])
 
     def calculateRadius(self, y, initial_size):
-        y -= self.convergent_point[1]
+        y -= convergence[1]
         return self.scaling_factor * y + initial_size
 
     def increaseSpeed(self, y, initial_speed):
-        y -= self.convergent_point[1] - 1
+        y -= convergence[1] - 1
         return initial_speed * y / 15
 
     def update(self):
         self.y += self.increaseSpeed(self.y, 1)
         self.x += self.trajectory * self.increaseSpeed(self.y, 1)
         if self.y > pyxel.height + self.calculateRadius(self.y, 5):
-            self.y = self.convergent_point[1]
-            self.x = self.convergent_point[0]
+            self.y = convergence[1]
+            self.x = convergence[0]
             self.trajectory = random.choice([-1, 0, 1])
 
     def draw(self):
@@ -108,9 +110,8 @@ class Ennemies(Road):
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 5), pyxel.COLOR_WHITE)
 
 
-class TimeOfDay(Road):
+class TimeOfDay:
     def __init__(self):
-        super().__init__()
         self.speed = 1
         self.width = 22
         self.y = 100
@@ -133,7 +134,7 @@ class TimeOfDay(Road):
             0,
             0,
             pyxel.width,
-            self.end_road,
+            sky_height,
             pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY,
         )
         pyxel.blt(
@@ -141,32 +142,34 @@ class TimeOfDay(Road):
         )
 
 
-class Milestones(Road):
+class Milestones:
     def __init__(self):
         self.min_height = 8
         self.min_width = 2
         self.scaling_step = 1.5
         self.start = 10
-        super().__init__()
 
     def update(self):
         pass
 
+    def findSlope(self, x0, y0):
+        return (y0 - convergence[1]) / (x0 - convergence[0])
+
     def findDistance(self, x0, slope):
-        return abs(((slope**2 + 1) ** (1 / 2)) * (x0 - self.convergent_point[0]))
+        return abs(((slope**2 + 1) ** (1 / 2)) * (x0 - convergence[0]))
 
     def findX(self, y0, slope):
-        return (y0 - self.convergent_point[1]) / slope + self.convergent_point[0]
+        return (y0 - convergence[1]) / slope + convergence[0]
 
     def right(self):
         slope = self.findSlope(pyxel.width - self.start, 375)
         total_distance = self.findDistance(self.start, slope)
-        cper_dist = self.findDistance(self.findX(self.end_road, slope), slope)
+        cper_dist = self.findDistance(self.findX(sky_height, slope), slope)
         scaling_factor = 1
         distance = cper_dist
         while distance < total_distance:
-            x = (distance / ((slope**2 + 1) ** (1 / 2))) + self.convergent_point[0]
-            y = slope * (x - self.convergent_point[0]) + self.convergent_point[1]
+            x = (distance / ((slope**2 + 1) ** (1 / 2))) + convergence[0]
+            y = slope * (x - convergence[0]) + convergence[1]
             x_align_correction = self.min_width * scaling_factor
             pyxel.rect(
                 x - x_align_correction,
@@ -188,12 +191,12 @@ class Milestones(Road):
     def left(self):
         slope = self.findSlope(self.start, 375)
         total_distance = self.findDistance(self.start, slope)
-        cper_dist = self.findDistance(self.findX(self.end_road, slope), slope)
+        cper_dist = self.findDistance(self.findX(sky_height, slope), slope)
         scaling_factor = 1
         distance = cper_dist
         while distance < total_distance:
-            x = (-distance / ((slope**2 + 1) ** (1 / 2))) + self.convergent_point[0]
-            y = slope * (x - self.convergent_point[0]) + self.convergent_point[1]
+            x = (-distance / ((slope**2 + 1) ** (1 / 2))) + convergence[0]
+            y = slope * (x - convergence[0]) + convergence[1]
             pyxel.rect(
                 x,
                 y - self.min_height * scaling_factor,

@@ -21,32 +21,5 @@ le joueur a comme véhicules :
 Il a la possibilité de bouger entre trois voies de circulation pour esquiver les objets.
 
 Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur en fonction du temps, plus ou moins vite selon le score.
-Il y a comme objets des :
-  - Plots
-  - arbres
-  - Balises
-  - Tonneaux
-  - cailloux
 
-Le ciel accueille le soleil et la Lune ainsi que l'ambiance jour/nuit qui change selon le temps.   ---> Possibilité de mettre des phares sur les véhicules
-
-06/02/2023 : Fonction Jour / Nuit terminée
-
-Objectifs pour le 27/02/2023 : Finir les graphiques des véhicules, les intégrer au jeu et commencer les déplacements ( interactions joueurs-machine)
-
-Objectif pour le 09/03/23 finir la voiture et terminer les interactions homme -> machine
-
-
-Idées : delay lors du changement de file + clignotant lors de l'action
-
-Difficultés à créer un changement de file lent et "lisse"
-
-16/03/2023 :   création des 5 positions possibles pour le déplacement
-               amélioration du scale factorisator
-
-
-
-
- <!--projet : https://www.pyxelstudio.net/studio/h65auydj -->
- <!-- https://www.pyxelstudio.net/studio/sluj96ez -->    
- <!-- https://www.pyxelstudio.net/studio/n65wcdf2 -->
+Difficultés à créer un changement de file lent et "lisse" pour la moto.
