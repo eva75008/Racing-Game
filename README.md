@@ -18,7 +18,7 @@ Le but est de faire un score le plus élevé possible. Le score évolue avec la 
 le joueur a comme véhicules :
   - une moto
   - une voiture <br>
-Il a la possibilité de bouger entre trois voies de circulation pour esquiver les objets.
+Il a la possibilité de bouger entre trois voies de circulation pour esquiver les objets.    5 POSITIONS POSSIBLES
 
 Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur en fonction du temps, plus ou moins vite selon le score.
 
