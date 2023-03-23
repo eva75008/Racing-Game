@@ -267,7 +267,7 @@ class Player:
             colkey=pyxel.COLOR_PINK,
         )
         print(varx)
-        if (varx)%60<=30:
+        if (varx)%20<=10:
             pyxel.blt(
                 x=self.x+32,
                 y=(screen_height - self.height)+95,
