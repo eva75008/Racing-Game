@@ -15,7 +15,7 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
-
+        self.varx = self.timeOfDay.x
         self.player = Player()
         pyxel.run(self.update, self.draw)
 
