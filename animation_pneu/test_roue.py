@@ -6,6 +6,7 @@ screen_width = 720
 screen_height = 480
 convergence = [screen_width // 2, 200]
 sky_height = screen_height // 2
+pneu = false
 
 class Game:
 
