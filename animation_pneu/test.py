@@ -15,8 +15,8 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
-        varx = self.timeOfDay.x
-        self.player = Player(varx)
+        self.varx = self.timeOfDay.x
+        self.player = Player()
         pyxel.run(self.update, self.draw)
 
     def update(self):
@@ -30,7 +30,7 @@ class Game:
         self.road.draw()
         self.timeOfDay.draw()
         self.milestone.draw()
-        self.player.draw()
+        self.player.draw(self.varx)
 
 
 class Road:
@@ -230,7 +230,7 @@ class Milestones:
         self.left()
 
 
-class Player(self,varx):
+class Player:
     def __init__(self):
         self.x = screen_width / 2 - 95 / 2
         self.width = 95
@@ -258,7 +258,7 @@ class Player(self,varx):
                 self.x = middle
 
 
-    def draw(self):
+    def draw(self, self.varx):
         pyxel.blt(
             x=self.x,
             y=screen_height - self.height,
