@@ -239,20 +239,24 @@ class Player:
         positions = [self.width, 200, pyxel.width / 2 - self.width / 2, 425, pyxel.width - self.width * 2 ]
 	#lorqu'un touche 'flèche' est appuyée, le joueur passe à la position possible la plus proche
 	if self.mvmt == 0:
-            if pyxel.btnp(pyxel.KEY_RIGHT):
+            if pyxel.btn(pyxel.KEY_RIGHT):
                 if self.playerposition < 4: 
                     self.playerposition += 1
                     # self.x = positions[self.playerposition]
 	            self.mvmt = 15
-            if pyxel.btnp(pyxel.KEY_LEFT):
+            if pyxel.btn(pyxel.KEY_LEFT):
                 if self.playerposition > 0: 
                     self.playerposition += -1
                     # self.x = positions[self.playerposition]
 		    self.mvmt = -15
 	if self.mvmt > 0:
-	    self.x += ...
-	    self.mvmt -= 1
+	    if self.x != positions[self.playerposition]:
+	        self.x += 2
+	        self.mvmt -= 1
         elif self.mvmt < 0:
+    	    if self.x != positions[self.playerposition]:
+	        self.x -= 1
+	        self.mvmt + = 1
 	
     def draw(self):
         pyxel.blt(
