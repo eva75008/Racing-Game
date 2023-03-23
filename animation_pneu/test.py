@@ -235,6 +235,7 @@ class Player(self,varx):
         self.x = screen_width / 2 - 95 / 2
         self.width = 95
         self.height = 150
+        self.varx = varx
 
     def update(self):
         right = screen_width - self.width * 2
@@ -269,7 +270,7 @@ class Player(self,varx):
             colkey=pyxel.COLOR_PINK,
         )
         print(Game.varx)
-        if ("variable en self.x")%60<=30:
+        if (self.varx)%60<=30:
             pyxel.blt(
                 x=self.x+32,
                 y=(screen_height - self.height)+95,
