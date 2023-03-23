@@ -229,34 +229,48 @@ class Milestones:
 
 class Player:
     def __init__(self):
-        self.x = screen_width / 2 - 95 / 2
+        self.x = pyxel.width / 2 - 95 / 2
         self.width = 95
         self.height = 150
-
+	#position du joueur dans la liste des positions possibles
+        self.playerposition = 2
+        self.mvmt = 0
+	
     def update(self):
-        right = screen_width - self.width * 2
-        middle = screen_width / 2 - self.width / 2
-        left = self.width
-
-        if pyxel.btnp(pyxel.KEY_RIGHT):
-            if self.x == middle:
-                self.x = right
-            if self.x == right:
-                self.x = right
-            if self.x == left:
-                self.x = middle
-        if pyxel.btnp(pyxel.KEY_LEFT):
-            if self.x == middle:
-                self.x = left
-            if self.x == left:
-                self.x = left
-            if self.x == right:
-                self.x = middle
-
+        #definition des positions possibles du joueur
+        positions = [self.width, 200, pyxel.width / 2 - self.width / 2, 425, pyxel.width - self.width * 2 ]
+	#lorqu'un touche 'flèche' est appuyée, le joueur passe à la position possible la plus proche
+        if self.mvmt == 0:
+            if pyxel.btn(pyxel.KEY_RIGHT):
+                if self.playerposition < 4: 
+                    self.playerposition += 1
+                    # self.x = positions[self.playerposition]
+                    self.mvmt = 20
+            if pyxel.btn(pyxel.KEY_LEFT):
+                if self.playerposition > 0: 
+                    self.playerposition += -1
+                    # self.x = positions[self.playerposition]
+                    self.mvmt = -20
+                    
+        if self.mvmt > 0:
+            if self.x <= positions[self.playerposition]:
+                self.x += 5
+                self.mvmt -= 1
+            else:
+                self.mvmt = 0
+    	        
+        elif self.mvmt < 0:
+            if self.x > positions[self.playerposition]:
+                self.x -= 5
+                self.mvmt += 1
+            else:
+                self.mvmt = 0
+        
+	   
     def draw(self):
         pyxel.blt(
             x=self.x,
-            y=screen_height - self.height,
+            y=pyxel.height - self.height,
             img=2,
             u=16,
             v=10,
@@ -264,6 +278,4 @@ class Player:
             h=self.height,
             colkey=pyxel.COLOR_PINK,
         )
-
-
 Game()
