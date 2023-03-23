@@ -52,9 +52,6 @@ class Road:
             convergence[1],
             pyxel.COLOR_GRAY,
         )
-    def pneu(self):
-        while pneu = true:
-            if convergence >150
 
     def outlineRoad(self):
         for n in range(2):
