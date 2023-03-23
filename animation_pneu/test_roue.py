@@ -15,8 +15,8 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
-        variable = self.timeOfDay.x
-        self.player = Player()
+        varx= self.timeOfDay.x
+        self.player = Player(varx)
         pyxel.run(self.update, self.draw)
 
     varx = self.timeOfDay.x
@@ -230,7 +230,7 @@ class Milestones:
         self.left()
 
 
-class Player:
+class Player(self,varx):
     def __init__(self):
         self.x = screen_width / 2 - 95 / 2
         self.width = 95
