@@ -51,6 +51,8 @@ class Road:
             convergence[1],
             pyxel.COLOR_GRAY,
         )
+    def pneu(self):
+        while pneu = true
 
     def outlineRoad(self):
         for n in range(2):
