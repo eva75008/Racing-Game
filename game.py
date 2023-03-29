@@ -15,14 +15,14 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
-	self.varx = self.timeOfDay.x
+        self.varx = self.timeOfDay.x
         self.player = Player()
         pyxel.run(self.update, self.draw)
 
     def update(self):
         self.road.update()
         self.timeOfDay.update()
-	self.varx = self.timeOfDay.x
+        self.varx = self.timeOfDay.x
         self.milestone.update()
         self.player.update()
 
@@ -139,7 +139,7 @@ class TimeOfDay:
             sky_height,
             pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY,
         )
-        
+
         pyxel.blt(
             self.x,
             self.y,
@@ -237,39 +237,39 @@ class Player:
 	#position du joueur dans la liste des positions possibles
         self.playerposition = 2
         self.mvmt = 0
-	
+
     def update(self):
         #definition des positions possibles du joueur
         positions = [self.width, 200, pyxel.width / 2 - self.width / 2, 425, pyxel.width - self.width * 2 ]
 	#lorqu'un touche 'flèche' est appuyée, le joueur passe à la position possible la plus proche
         if self.mvmt == 0:
             if pyxel.btn(pyxel.KEY_RIGHT):
-                if self.playerposition < 4: 
+                if self.playerposition < 4:
                     self.playerposition += 1
                     # self.x = positions[self.playerposition]
                     self.mvmt = 20
             if pyxel.btn(pyxel.KEY_LEFT):
-                if self.playerposition > 0: 
+                if self.playerposition > 0:
                     self.playerposition += -1
                     # self.x = positions[self.playerposition]
                     self.mvmt = -20
-                    
+
         if self.mvmt > 0:
             if self.x <= positions[self.playerposition]:
                 self.x += 5
                 self.mvmt -= 1
             else:
                 self.mvmt = 0
-    	        
+
         elif self.mvmt < 0:
             if self.x > positions[self.playerposition]:
                 self.x -= 5
                 self.mvmt += 1
             else:
                 self.mvmt = 0
-        
-	   
-        def draw(self, varx):
+
+
+    def draw(self, varx):
         pyxel.blt(
             x=self.x,
             y=screen_height - self.height,
