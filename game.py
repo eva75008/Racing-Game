@@ -2,6 +2,7 @@ import pyxel
 import math
 from random import randint
 
+
 screen_width = 720
 screen_height = 480
 convergence = [screen_width // 2, 200]
@@ -15,14 +16,12 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
-        self.varx = self.timeOfDay.x
         self.player = Player()
         pyxel.run(self.update, self.draw)
 
     def update(self):
         self.road.update()
         self.timeOfDay.update()
-        self.varx = self.timeOfDay.x
         self.milestone.update()
         self.player.update()
 
@@ -31,7 +30,7 @@ class Game:
         self.road.draw()
         self.timeOfDay.draw()
         self.milestone.draw()
-        self.player.draw(self.varx)
+        self.player.draw()
 
 
 class Road:
@@ -166,7 +165,7 @@ class Milestones:
         return (y0 - convergence[1]) / (x0 - convergence[0])
 
     def findDistance(self, x0, slope):
-        return abs(math.sqrt(slope ** 2 + 1) * (x0 - convergence[0]))
+        return abs(math.sqrt(slope**2 + 1) * (x0 - convergence[0]))
 
     def findX(self, y0, slope):
         return (y0 - convergence[1]) / slope + convergence[0]
@@ -178,7 +177,7 @@ class Milestones:
         scaling_factor = 1
         distance = cper_dist
         while distance < total_distance:
-            x = distance / (slope ** 2 + 1) ** (1 / 2) + convergence[0]
+            x = distance / (slope**2 + 1) ** (1 / 2) + convergence[0]
             y = slope * (x - convergence[0]) + convergence[1]
             x_align_correction = self.min_width * scaling_factor
             pyxel.rect(
@@ -205,7 +204,7 @@ class Milestones:
         scaling_factor = 1
         distance = cper_dist
         while distance < total_distance:
-            x = -distance / (slope ** 2 + 1) ** (1 / 2) + convergence[0]
+            x = -distance / (slope**2 + 1) ** (1 / 2) + convergence[0]
             y = slope * (x - convergence[0]) + convergence[1]
             pyxel.rect(
                 x,
@@ -234,81 +233,81 @@ class Player:
         self.x = pyxel.width / 2 - 95 / 2
         self.width = 95
         self.height = 150
-	#position du joueur dans la liste des positions possibles
         self.playerposition = 2
         self.mvmt = 0
 
     def update(self):
-        #definition des positions possibles du joueur
-        positions = [self.width, 200, pyxel.width / 2 - self.width / 2, 425, pyxel.width - self.width * 2 ]
-	#lorqu'un touche 'flèche' est appuyée, le joueur passe à la position possible la plus proche
+        positions = [
+            self.width,
+            200,
+            pyxel.width / 2 - self.width / 2,
+            425,
+            pyxel.width - self.width * 2,
+        ]
         if self.mvmt == 0:
             if pyxel.btn(pyxel.KEY_RIGHT):
                 if self.playerposition < 4:
                     self.playerposition += 1
-                    # self.x = positions[self.playerposition]
                     self.mvmt = 20
             if pyxel.btn(pyxel.KEY_LEFT):
                 if self.playerposition > 0:
                     self.playerposition += -1
-                    # self.x = positions[self.playerposition]
                     self.mvmt = -20
-
         if self.mvmt > 0:
             if self.x <= positions[self.playerposition]:
                 self.x += 5
                 self.mvmt -= 1
             else:
                 self.mvmt = 0
-
-        elif self.mvmt < 0:
+        if self.mvmt < 0:
             if self.x > positions[self.playerposition]:
                 self.x -= 5
                 self.mvmt += 1
             else:
                 self.mvmt = 0
 
-
-    def draw(self, varx):
+    def draw(self):
         pyxel.blt(
-            x=self.x,
-            y=screen_height - self.height,
-            img=2,
-            u=16,
-            v=10,
-            w=self.width,
-            h=self.height,
-            colkey=pyxel.COLOR_PINK,
-        )  #affichage de la moto entière sans le pneu
+            self.x,
+            screen_height - self.height,
+            2,
+            16,
+            10,
+            self.width,
+            self.height,
+            pyxel.COLOR_PINK,
+        )
         pyxel.blt(
-            x=self.x+32,
-            y=(screen_height - self.height)+86+(varx)%18,
-            img=2,
-            u=48,
-            v=160,
-            w=32,
-            h=15,
-            colkey=pyxel.COLOR_PINK,
-        )  #affichage du premier chevron de la roue ( position haute )
+            self.x + 32,
+            (screen_height - self.height) + 86 + (pyxel.frame_count) % 18,
+            2,
+            48,
+            160,
+            32,
+            15,
+            pyxel.COLOR_PINK,
+        )
         pyxel.blt(
-            x=self.x+32,
-            y=(screen_height - self.height)+86+18+(varx)%18,
-            img=2,
-            u=48,
-            v=160,
-            w=32,
-            h=15,
-            colkey=pyxel.COLOR_PINK,
-        )  #affichage du deuxième chevron de la roue ( position centrale )
-        if varx%18+2*18<45:
+            self.x + 32,
+            (screen_height - self.height) + 86 + 18 + (pyxel.frame_count) % 18,
+            2,
+            48,
+            160,
+            32,
+            15,
+            pyxel.COLOR_PINK,
+        )
+        if pyxel.frame_count % 18 + 2 * 18 < 45:
             pyxel.blt(
-                x=self.x+32,
-                y=(screen_height - self.height)+86+2*18+(varx)%18,
-                img=2,
-                u=48,
-                v=160,
-                w=32,
-                h=15,
+                self.x + 32,
+                (screen_height - self.height) + 86 + 2 * 18 + (pyxel.frame_count) % 18,
+                2,
+                48,
+                160,
+                32,
+                15,
                 colkey=pyxel.COLOR_PINK,
-            )  #affichage du troisième chevron de la roue ( position basse si possible )
+            )
+
+
 Game()
