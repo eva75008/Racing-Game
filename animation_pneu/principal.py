@@ -255,7 +255,7 @@ class Player:
                 self.x = middle
 
 
-    def draw(self, varx):
+        def draw(self, varx):
         pyxel.blt(
             x=self.x,
             y=screen_height - self.height,
@@ -265,29 +265,38 @@ class Player:
             w=self.width,
             h=self.height,
             colkey=pyxel.COLOR_PINK,
-        )
-     #   if (varx)%30<=10:
-     #       pyxel.blt(
-      #          x=self.x+32,
-      #          y=(screen_height - self.height)+95,
-      #          img=2,
-      #          u=96,
-      #          v=160,
-      #          w=33,
-     #           h=42,
-     #           colkey=pyxel.COLOR_PINK,
-     #       )
-        if 10<(varx)%30<=20:
+        )  #affichage de la moto entière sans le pneu
+        pyxel.blt(
+            x=self.x+32,
+            y=(screen_height - self.height)+86+(varx)%18,
+            img=2,
+            u=48,
+            v=160,
+            w=32,
+            h=15,
+            colkey=pyxel.COLOR_PINK,
+        )  #affichage du premier chevron de la roue ( position haute )
+        pyxel.blt(
+            x=self.x+32,
+            y=(screen_height - self.height)+86+18+(varx)%18,
+            img=2,
+            u=48,
+            v=160,
+            w=32,
+            h=15,
+            colkey=pyxel.COLOR_PINK,
+        )  #affichage du deuxième chevron de la roue ( position centrale )
+        if varx%18+2*18<45:
             pyxel.blt(
                 x=self.x+32,
-                y=(screen_height - self.height)+95,
+                y=(screen_height - self.height)+86+2*18+(varx)%18,
                 img=2,
                 u=48,
                 v=160,
-                w=33,
-                h=42,
+                w=32,
+                h=15,
                 colkey=pyxel.COLOR_PINK,
-            )
+            )  #affichage du troisième chevron de la roue ( position basse si possible )
 
 
 Game()
