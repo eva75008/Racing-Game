@@ -15,12 +15,14 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
+	self.varx = self.timeOfDay.x
         self.player = Player()
         pyxel.run(self.update, self.draw)
 
     def update(self):
         self.road.update()
         self.timeOfDay.update()
+	self.varx = self.timeOfDay.x
         self.milestone.update()
         self.player.update()
 
@@ -29,7 +31,7 @@ class Game:
         self.road.draw()
         self.timeOfDay.draw()
         self.milestone.draw()
-        self.player.draw()
+        self.player.draw(self.varx)
 
 
 class Road:
@@ -267,15 +269,46 @@ class Player:
                 self.mvmt = 0
         
 	   
-    def draw(self):
+        def draw(self, varx):
         pyxel.blt(
             x=self.x,
-            y=pyxel.height - self.height,
+            y=screen_height - self.height,
             img=2,
             u=16,
             v=10,
             w=self.width,
             h=self.height,
             colkey=pyxel.COLOR_PINK,
-        )
+        )  #affichage de la moto entière sans le pneu
+        pyxel.blt(
+            x=self.x+32,
+            y=(screen_height - self.height)+86+(varx)%18,
+            img=2,
+            u=48,
+            v=160,
+            w=32,
+            h=15,
+            colkey=pyxel.COLOR_PINK,
+        )  #affichage du premier chevron de la roue ( position haute )
+        pyxel.blt(
+            x=self.x+32,
+            y=(screen_height - self.height)+86+18+(varx)%18,
+            img=2,
+            u=48,
+            v=160,
+            w=32,
+            h=15,
+            colkey=pyxel.COLOR_PINK,
+        )  #affichage du deuxième chevron de la roue ( position centrale )
+        if varx%18+2*18<45:
+            pyxel.blt(
+                x=self.x+32,
+                y=(screen_height - self.height)+86+2*18+(varx)%18,
+                img=2,
+                u=48,
+                v=160,
+                w=32,
+                h=15,
+                colkey=pyxel.COLOR_PINK,
+            )  #affichage du troisième chevron de la roue ( position basse si possible )
 Game()
