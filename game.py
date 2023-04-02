@@ -234,7 +234,7 @@ class Player:
         self.player_width = 95
         self.player_height = 150
         self.player_speed = 10
-        self.wheel_size = (31, 15)
+        self.wheel_size = (31, 10)
         self.player_x = pyxel.width / 2 - self.player_width / 2
 
     def update(self):
@@ -266,36 +266,33 @@ class Player:
             2,
             48,
             160,
-            32,
-            15,
-            pyxel.COLOR_PINK,
+            self.wheel_size[0],
+            self.wheel_size[1],
         )
         pyxel.blt(
             self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
             screen_height
             - self.player_height / 2
-            + 2 * self.wheel_size[1]
+            + 2.5 * self.wheel_size[1]
             + pyxel.frame_count % 18,
             2,
             48,
             160,
-            32,
-            15,
-            pyxel.COLOR_PINK,
+            self.wheel_size[0],
+            self.wheel_size[1],
         )
         if pyxel.frame_count % 18 + 2 * self.wheel_size[1] < 45:
             pyxel.blt(
                 self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
                 screen_height
                 - self.player_height / 2
-                + 3 * self.wheel_size[1]
+                + 4 * self.wheel_size[1]
                 + pyxel.frame_count % 18,
                 2,
                 48,
                 160,
-                32,
-                15,
-                colkey=pyxel.COLOR_PINK,
+                self.wheel_size[0],
+                self.wheel_size[1],
             )
 
 
