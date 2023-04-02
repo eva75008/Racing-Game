@@ -6,10 +6,6 @@
 *To edit ressource online click [here](https://kitao.github.io/pyxel/wasm/launcher/?edit=rattlessnake.retro-racing-game.graphics).*
 
 
-*Pour essayer la sauvegarde en ligne cliquer [ici](https://kitao.github.io/pyxel/wasm/launcher/?run=rattlessnake.retro-racing-game.sauvegarde).*
-
-
-
 Cahier des charges du jeu :
 
 Utilisation de la bibliothèque pyxel pour créer un jeu type retro de voiture qui esquive des objets.<br>

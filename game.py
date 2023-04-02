@@ -1,11 +1,11 @@
 import pyxel
-import math
+from math import sin, radians, sqrt
 from random import randint
 
 
 screen_width = 720
 screen_height = 480
-convergence = [screen_width // 2, 200]
+convergence = (screen_width // 2, 200)
 sky_height = screen_height // 2
 
 
@@ -34,9 +34,9 @@ class Game:
 
 
 class Road:
-    def __init__(self, overflow_x=200, line_thickness=40):
-        self.overflowX = overflow_x
-        self.line_thickness = line_thickness
+    def __init__(self):
+        self.overflowX = 200
+        self.line_thickness = 40
         self.enemies = Enemies()
 
     def createRoad(self):
@@ -84,9 +84,9 @@ class Road:
 
 
 class Enemies:
-    def __init__(self):
+    def __init__(self, scaling_factor=0.05):
         (self.x, self.y) = convergence
-        self.scaling_factor = 0.05
+        self.scaling_factor = scaling_factor
         self.trajectory = randint(-1, 1)
 
     def calculateRadius(self, y, initial_size):
@@ -111,20 +111,21 @@ class Enemies:
 
 
 class TimeOfDay:
-    def __init__(self, speed=1):
+    def __init__(self, speed=1, day=True):
         self.speed = speed
-        self.x = 1
-        self.y = 100
-        self.width = 22
+        self.day = day
+        self.pos = [1, 100]
         self.graphicsPositionX = 22
-        self.day = True
+        self.sky = sky_height - 30
 
     def update(self):
-        self.x += self.speed
-        self.y = 200 * math.sin(math.radians(-180 * self.x / screen_width)) + 200
-        if self.x > screen_width:
+        self.pos[0] += self.speed
+        self.pos[1] = (
+            self.sky * sin(radians(-180 * self.pos[0] / screen_width)) + self.sky
+        )
+        if self.pos[0] > screen_width:
             self.day = not self.day
-            self.x = 1
+            self.pos[0] = 1
             if self.day:
                 self.graphicsPositionX = 22
             else:
@@ -140,8 +141,8 @@ class TimeOfDay:
         )
 
         pyxel.blt(
-            self.x,
-            self.y,
+            self.pos[0],
+            self.pos[1],
             0,
             6,
             self.graphicsPositionX,
@@ -165,7 +166,7 @@ class Milestones:
         return (y0 - convergence[1]) / (x0 - convergence[0])
 
     def findDistance(self, x0, slope):
-        return abs(math.sqrt(slope**2 + 1) * (x0 - convergence[0]))
+        return abs(sqrt(slope**2 + 1) * (x0 - convergence[0]))
 
     def findX(self, y0, slope):
         return (y0 - convergence[1]) / slope + convergence[0]
@@ -230,56 +231,38 @@ class Milestones:
 
 class Player:
     def __init__(self):
-        self.x = pyxel.width / 2 - 95 / 2
-        self.width = 95
-        self.height = 150
-        self.playerposition = 2
-        self.mvmt = 0
+        self.player_width = 95
+        self.player_height = 150
+        self.player_speed = 10
+        self.wheel_size = (31, 15)
+        self.player_x = pyxel.width / 2 - self.player_width / 2
 
     def update(self):
-        positions = [
-            self.width,
-            200,
-            pyxel.width / 2 - self.width / 2,
-            425,
-            pyxel.width - self.width * 2,
-        ]
-        if self.mvmt == 0:
-            if pyxel.btn(pyxel.KEY_RIGHT):
-                if self.playerposition < 4:
-                    self.playerposition += 1
-                    self.mvmt = 20
-            if pyxel.btn(pyxel.KEY_LEFT):
-                if self.playerposition > 0:
-                    self.playerposition += -1
-                    self.mvmt = -20
-        if self.mvmt > 0:
-            if self.x <= positions[self.playerposition]:
-                self.x += 5
-                self.mvmt -= 1
-            else:
-                self.mvmt = 0
-        if self.mvmt < 0:
-            if self.x > positions[self.playerposition]:
-                self.x -= 5
-                self.mvmt += 1
-            else:
-                self.mvmt = 0
+        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 0:
+            self.player_x -= self.player_speed
+        if (
+            pyxel.btn(pyxel.KEY_RIGHT)
+            and self.player_x < screen_width - self.player_width
+        ):
+            self.player_x += self.player_speed
 
     def draw(self):
         pyxel.blt(
-            self.x,
-            screen_height - self.height,
+            self.player_x,
+            screen_height - self.player_height,
             2,
             16,
             10,
-            self.width,
-            self.height,
+            self.player_width,
+            self.player_height,
             pyxel.COLOR_PINK,
         )
         pyxel.blt(
-            self.x + 32,
-            (screen_height - self.height) + 86 + (pyxel.frame_count) % 18,
+            self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
+            screen_height
+            - self.player_height / 2
+            + self.wheel_size[1]
+            + pyxel.frame_count % 18,
             2,
             48,
             160,
@@ -288,8 +271,11 @@ class Player:
             pyxel.COLOR_PINK,
         )
         pyxel.blt(
-            self.x + 32,
-            (screen_height - self.height) + 86 + 18 + (pyxel.frame_count) % 18,
+            self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
+            screen_height
+            - self.player_height / 2
+            + 2 * self.wheel_size[1]
+            + pyxel.frame_count % 18,
             2,
             48,
             160,
@@ -297,10 +283,13 @@ class Player:
             15,
             pyxel.COLOR_PINK,
         )
-        if pyxel.frame_count % 18 + 2 * 18 < 45:
+        if pyxel.frame_count % 18 + 2 * self.wheel_size[1] < 45:
             pyxel.blt(
-                self.x + 32,
-                (screen_height - self.height) + 86 + 2 * 18 + (pyxel.frame_count) % 18,
+                self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
+                screen_height
+                - self.player_height / 2
+                + 3 * self.wheel_size[1]
+                + pyxel.frame_count % 18,
                 2,
                 48,
                 160,
