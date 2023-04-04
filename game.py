@@ -234,15 +234,16 @@ class Player:
         self.player_width = 95
         self.player_height = 150
         self.player_speed = 10
-        self.wheel_size = (31, 10)
+        self.wheel_size = (32, 15)
+        self.wheel_place = 86
         self.player_x = pyxel.width / 2 - self.player_width / 2
 
     def update(self):
-        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 0:
+        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
             self.player_x -= self.player_speed
         if (
             pyxel.btn(pyxel.KEY_RIGHT)
-            and self.player_x < screen_width - self.player_width
+            and self.player_x < screen_width - self.player_width - 5
         ):
             self.player_x += self.player_speed
 
@@ -256,44 +257,44 @@ class Player:
             self.player_width,
             self.player_height,
             pyxel.COLOR_PINK,
-        )
+        )  #affichage de la moto entière sans le pneu
         pyxel.blt(
-            self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
-            screen_height
-            - self.player_height / 2
-            + self.wheel_size[1]
+            self.player_x + self.wheel_size[0],
+            (screen_height
+            - self.player_height)
+            + self.wheel_place
             + pyxel.frame_count % 18,
             2,
             48,
             160,
             self.wheel_size[0],
             self.wheel_size[1],
-        )
+        )  #affichage du premier chevron de la roue ( position haute )
         pyxel.blt(
-            self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
-            screen_height
-            - self.player_height / 2
-            + 2.5 * self.wheel_size[1]
+            self.player_x + self.wheel_size[0],
+            (screen_height
+            - self.player_height)
+            + self.wheel_place
+            + self.wheel_size[1] + 3
             + pyxel.frame_count % 18,
             2,
             48,
             160,
             self.wheel_size[0],
             self.wheel_size[1],
-        )
-        if pyxel.frame_count % 18 + 2 * self.wheel_size[1] < 45:
+        )  #affichage du deuxième chevron de la roue ( position centrale )
+        if pyxel.frame_count % 18 + 2 * (self.wheel_size[1]+3) < 45:
             pyxel.blt(
-                self.player_x + self.player_width / 2 - self.wheel_size[0] / 2,
-                screen_height
-                - self.player_height / 2
-                + 4 * self.wheel_size[1]
+                self.player_x + self.wheel_size[0],
+                (screen_height
+                - self.player_height)
+                + self.wheel_place
+                + 2*(self.wheel_size[1] + 3)
                 + pyxel.frame_count % 18,
                 2,
                 48,
                 160,
                 self.wheel_size[0],
                 self.wheel_size[1],
-            )
-
-
+            )  #affichage du troisième chevron de la roue ( position basse si possible )
 Game()
