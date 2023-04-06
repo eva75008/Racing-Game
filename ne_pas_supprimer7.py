@@ -97,7 +97,7 @@ class Enemies:
         y -= convergence[1] - 1
         return initial_speed * 2 ** (y / 60)
 
-    def update(self, player_x):
+    def update(self):
         self.y += self.increaseSpeed(self.y, 1)
         self.x += self.trajectory * self.increaseSpeed(self.y, 1)
         if self.y > screen_height + self.calculateRadius(self.y, 5):
