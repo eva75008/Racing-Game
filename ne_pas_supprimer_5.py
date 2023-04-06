@@ -122,6 +122,10 @@ class TimeOfDay:
         self.pos = [1, 100]
         self.graphicsPositionX = 22
         self.sky = sky_height - 30
+        self.graphicsPositionX = 0
+        self.graphicsPositionY = 16
+        self.objetHeight = 63
+        self.objetWidth = 63
 
     def update(self):
         self.pos[0] += self.speed
@@ -249,9 +253,7 @@ class Player:
         self.wheel_place = 86
         self.player_x = pyxel.width / 2 - self.player_width / 2
     
-    def coordonnees(self):
-        return self.player_x
-    
+   
     def update(self):
         self.p = self.coordonnees()
         if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
@@ -262,6 +264,9 @@ class Player:
         ):
             self.player_x += self.player_speed
 
+     def coordonnees(self):
+        return self.player_x
+                
     def draw(self):
         pyxel.blt(
             self.player_x,
