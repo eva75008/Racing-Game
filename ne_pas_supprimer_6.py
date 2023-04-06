@@ -110,7 +110,6 @@ class Enemies:
                 self.trajectory = randint(-1, 1)
 
     def draw(self):
-        print(self.player.coordonnees())
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 10), pyxel.COLOR_BLACK)
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 8), pyxel.COLOR_WHITE)
 
