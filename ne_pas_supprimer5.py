@@ -74,7 +74,7 @@ class Road:
                 )
 
     def update(self):
-        self.enemies.update(Player.self.player_x)
+        self.enemies.update()
 
     def draw(self):
         self.createRoad()
@@ -103,7 +103,7 @@ class Enemies:
         if self.y > screen_height + self.calculateRadius(self.y, 5):
             self.y = convergence[1]
             self.x = convergence[0]
-            if player_x > 550 and randint(1, 100) > 30:
+            if Player.coordonnees() > 550 and randint(1, 100) > 30:
                 self.trajectory = 1
             else:
                 self.trajectory = randint(-1, 1)
@@ -246,7 +246,10 @@ class Player:
         self.wheel_size = (32, 15)
         self.wheel_place = 86
         self.player_x = pyxel.width / 2 - self.player_width / 2
-
+    
+    def coordonnees(self):
+        return self.player_x
+    
     def update(self):
         if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
             self.player_x -= self.player_speed
