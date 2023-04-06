@@ -3,7 +3,7 @@
 
 *To test the game online click [here](https://kitao.github.io/pyxel/wasm/launcher/?run=rattlessnake.retro-racing-game.game).*
 
-*To edit ressource online click [here](https://kitao.github.io/pyxel/wasm/launcher/?edit=rattlessnake.retro-racing-game.graphics).*
+*To edit ressource online click [here](https://kitao.github.io/pyxel/wasm/launcher/?edit=rattlessnake.retro-racing-game.graphics(2)).*
 
 
 Cahier des charges du jeu :
