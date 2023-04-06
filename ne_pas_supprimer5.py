@@ -74,7 +74,7 @@ class Road:
                 )
 
     def update(self):
-        self.enemies.update(Player.player_x)
+        self.enemies.update(Player.self.player_x)
 
     def draw(self):
         self.createRoad()
