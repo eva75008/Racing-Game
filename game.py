@@ -115,8 +115,8 @@ class TimeOfDay:
         self.speed = speed
         self.day = day
         self.pos = [1, 100]
-        self.graphicsPositionX = 22
-        self.sky = sky_height - 30
+        self.graphicsPositionY = 16
+        self.sky = sky_height - 50
 
     def update(self):
         self.pos[0] += self.speed
@@ -127,9 +127,9 @@ class TimeOfDay:
             self.day = not self.day
             self.pos[0] = 1
             if self.day:
-                self.graphicsPositionX = 22
+                self.graphicsPositionY = 16
             else:
-                self.graphicsPositionX = 44
+                self.graphicsPositionY = 80
 
     def draw(self):
         pyxel.rect(
@@ -139,15 +139,14 @@ class TimeOfDay:
             sky_height,
             pyxel.COLOR_CYAN if self.day else pyxel.COLOR_NAVY,
         )
-
         pyxel.blt(
             self.pos[0],
             self.pos[1],
             0,
-            6,
-            self.graphicsPositionX,
-            22,
-            22,
+            0,
+            self.graphicsPositionY,
+            60,
+            60,
             pyxel.COLOR_BLACK,
         )
 
@@ -236,18 +235,19 @@ class Player:
         self.player_speed = 10
         self.wheel_size = (32, 15)
         self.wheel_place = 86
-        self.player_x = pyxel.width / 2 - self.player_width / 2
+        self.player_x = screen_width // 2 - self.player_width // 2
 
     def update(self):
-        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
+        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 0:
             self.player_x -= self.player_speed
         if (
             pyxel.btn(pyxel.KEY_RIGHT)
-            and self.player_x < screen_width - self.player_width - 5
+            and self.player_x < screen_width - self.player_width
         ):
             self.player_x += self.player_speed
 
     def draw(self):
+        # motorcycle
         pyxel.blt(
             self.player_x,
             screen_height - self.player_height,
@@ -257,44 +257,50 @@ class Player:
             self.player_width,
             self.player_height,
             pyxel.COLOR_PINK,
-        )  #affichage de la moto entière sans le pneu
+        )
+        # first tire tread (top)
         pyxel.blt(
             self.player_x + self.wheel_size[0],
-            (screen_height
-            - self.player_height)
+            screen_height
+            - self.player_height
             + self.wheel_place
-            + pyxel.frame_count % 18,
+            + 17 * (pyxel.frame_count % 5) / 4,
             2,
             48,
             160,
             self.wheel_size[0],
             self.wheel_size[1],
-        )  #affichage du premier chevron de la roue ( position haute )
+        )
+        # second tire tread (middle)
         pyxel.blt(
             self.player_x + self.wheel_size[0],
-            (screen_height
-            - self.player_height)
+            screen_height
+            - self.player_height
             + self.wheel_place
-            + self.wheel_size[1] + 3
-            + pyxel.frame_count % 18,
+            + self.wheel_size[1]
+            + 3
+            + 17 * (pyxel.frame_count % 5) / 4,
             2,
             48,
             160,
             self.wheel_size[0],
             self.wheel_size[1],
-        )  #affichage du deuxième chevron de la roue ( position centrale )
-        if pyxel.frame_count % 18 + 2 * (self.wheel_size[1]+3) < 45:
+        )
+        # third tire tread (bottom)
+        if 17 * (pyxel.frame_count % 5) / 4 + 2 * (self.wheel_size[1] + 3) < 45:
             pyxel.blt(
                 self.player_x + self.wheel_size[0],
-                (screen_height
-                - self.player_height)
+                screen_height
+                - self.player_height
                 + self.wheel_place
-                + 2*(self.wheel_size[1] + 3)
-                + pyxel.frame_count % 18,
+                + 2 * (self.wheel_size[1] + 3)
+                + 17 * (pyxel.frame_count % 5) / 4,
                 2,
                 48,
                 160,
                 self.wheel_size[0],
                 self.wheel_size[1],
-            )  #affichage du troisième chevron de la roue ( position basse si possible )
+            )
+
+
 Game()
