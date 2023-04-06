@@ -103,13 +103,13 @@ class Enemies:
         if self.y > screen_height + self.calculateRadius(self.y, 5):
             self.y = convergence[1]
             self.x = convergence[0]
-            if self.Player.coordonnees() > 550 and randint(1, 100) > 30:
+            if Player.coordonnees() > 550 and randint(1, 100) > 30:
                 self.trajectory = 1
             else:
                 self.trajectory = randint(-1, 1)
 
     def draw(self):
-        print(self.Player.coordonnees())
+        print(Player.coordonnees())
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 10), pyxel.COLOR_BLACK)
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 8), pyxel.COLOR_WHITE)
 
