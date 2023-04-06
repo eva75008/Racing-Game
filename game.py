@@ -152,8 +152,8 @@ class TimeOfDay:
             0,
             self.graphicsPositionX,
             self.graphicsPositionY,
-            self.objetHeight = 47,
-            self.objetWidth = 63,
+            self.objetHeight,
+            self.objetWidth,
             pyxel.COLOR_BLACK,
         )
 
