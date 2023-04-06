@@ -253,7 +253,7 @@ class Player:
         return self.player_x
     
     def update(self):
-        self.p = coordonnees()
+        self.p = self.coordonnees()
         if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
             self.player_x -= self.player_speed
         if (
