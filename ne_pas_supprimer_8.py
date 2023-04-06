@@ -104,7 +104,8 @@ class Enemies:
         if self.y > screen_height + self.calculateRadius(self.y, 5):
             self.y = convergence[1]
             self.x = convergence[0]
-            if self.player.coordonnees() > 550 and randint(1, 100) > 30:
+            print(self.player.coordonnees())
+            if self.player.coordonnees() > 550 and randint(1, 100) > 10:
                 self.trajectory = 1
             else:
                 self.trajectory = randint(-1, 1)
