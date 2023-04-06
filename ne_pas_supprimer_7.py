@@ -263,7 +263,7 @@ class Player:
         ):
             self.player_x += self.player_speed
 
-     def coordonnees(self):
+    def coordonnees(self):
         return self.player_x
                 
     def draw(self):
