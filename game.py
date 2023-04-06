@@ -127,9 +127,15 @@ class TimeOfDay:
             self.day = not self.day
             self.pos[0] = 1
             if self.day:
-                self.graphicsPositionX = 22
+                self.graphicsPositionX = 0
+                self.graphicsPositionY = 16
+                self.objetHeight = 63
+                self.objetWidth = 63
             else:
-                self.graphicsPositionX = 44
+                self.graphicsPositionX = 0
+                self.graphicsPositionY = 80
+                self.objetHeight = 47
+                self.objetWidth = 47
 
     def draw(self):
         pyxel.rect(
@@ -144,10 +150,10 @@ class TimeOfDay:
             self.pos[0],
             self.pos[1],
             0,
-            6,
             self.graphicsPositionX,
-            22,
-            22,
+            self.graphicsPositionY,
+            self.objetHeight = 47,
+            self.objetWidth = 63,
             pyxel.COLOR_BLACK,
         )
 
