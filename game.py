@@ -12,7 +12,7 @@ sky_height = screen_height // 2
 class Game:
     def __init__(self):
         pyxel.init(screen_width, screen_height, "Retro-racing Game", 60)
-        pyxel.load("graphics(2).pyxres")
+        pyxel.load("graphics(3).pyxres")
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
