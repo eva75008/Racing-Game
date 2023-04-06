@@ -129,8 +129,8 @@ class TimeOfDay:
             if self.day:
                 self.graphicsPositionX = 0
                 self.graphicsPositionY = 16
-                self.objetHeight = 63
-                self.objetWidth = 63
+                self.objetHeight = 47
+                self.objetWidth = 47
             else:
                 self.graphicsPositionX = 0
                 self.graphicsPositionY = 80
