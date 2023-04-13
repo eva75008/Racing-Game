@@ -19,4 +19,5 @@ le joueur a comme véhicules :
 
 Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur en fonction du temps, plus ou moins vite selon le score.
 
-Difficultés à créer un changement de file lent et "lisse" pour la moto.
+Difficultés à créer un changement de file lent et "lisse" pour la moto.   [RÉSOLUT]
+La roue de la moto a une animation et peut changer de vitesse.
