@@ -21,3 +21,5 @@ Les objets de décors apparaissent à l'horizon puis se rapprochent du joueur en
 
 Difficultés à créer un changement de file lent et "lisse" pour la moto.   [RÉSOLUT] <br>
 La roue de la moto a une animation et peut changer de vitesse.
+
+<!-- NE PAS SUPPRIMER Easter egg : éclipse avec le soleil et la lune -->
