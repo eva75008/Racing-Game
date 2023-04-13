@@ -240,11 +240,11 @@ class Player:
         self.player_x = screen_width // 2 - self.player_width // 2
 
     def update(self):
-        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 0:
+        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
             self.player_x -= self.player_speed
         if (
             pyxel.btn(pyxel.KEY_RIGHT)
-            and self.player_x < screen_width - self.player_width
+            and self.player_x < screen_width - self.player_width - 5
         ):
             self.player_x += self.player_speed
 
