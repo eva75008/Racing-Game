@@ -236,7 +236,7 @@ class Player:
         self.wheel_size = (32, 15)
         self.wheel_space = 18
         self.wheel_place = 86
-        self.wheel_speed = 18
+        self.wheel_speed = 18   #the lower the faster and wheel_speed <= 18
         self.player_x = screen_width // 2 - self.player_width // 2
 
     def update(self):
