@@ -234,7 +234,9 @@ class Player:
         self.player_height = 150
         self.player_speed = 10
         self.wheel_size = (32, 15)
+        self.wheel_space = 18
         self.wheel_place = 86
+        self.wheel_speed = 18
         self.player_x = screen_width // 2 - self.player_width // 2
 
     def update(self):
@@ -264,7 +266,8 @@ class Player:
             screen_height
             - self.player_height
             + self.wheel_place
-            + 17 * (pyxel.frame_count % 5) / 4,
+            + self.wheel_space
+            - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed-1),
             2,
             48,
             160,
@@ -277,9 +280,9 @@ class Player:
             screen_height
             - self.player_height
             + self.wheel_place
-            + self.wheel_size[1]
-            + 3
-            + 17 * (pyxel.frame_count % 5) / 4,
+            + (2*self.wheel_space)
+            - 17 * (pyxel.frame_count % self.wheel_speed) /
+            (self.wheel_speed-1),
             2,
             48,
             160,
@@ -287,14 +290,15 @@ class Player:
             self.wheel_size[1],
         )
         # third tire tread (bottom)
-        if 17 * (pyxel.frame_count % 5) / 4 + 2 * (self.wheel_size[1] + 3) < 45:
+        if 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed-1) > 9 :
             pyxel.blt(
                 self.player_x + self.wheel_size[0],
                 screen_height
                 - self.player_height
                 + self.wheel_place
-                + 2 * (self.wheel_size[1] + 3)
-                + 17 * (pyxel.frame_count % 5) / 4,
+                + 3 * (self.wheel_space)
+                - 17 * (pyxel.frame_count % self.wheel_speed)
+                / (self.wheel_speed-1),
                 2,
                 48,
                 160,
