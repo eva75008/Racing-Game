@@ -111,7 +111,7 @@ class Enemies:
 
 
 class TimeOfDay:
-    def __init__(self, speed=1, day=True):
+    def __init__(self, speed=0.5, day=True):
         self.speed = speed
         self.day = day
         self.pos = [1, 100]
@@ -234,9 +234,7 @@ class Player:
         self.player_height = 150
         self.player_speed = 10
         self.wheel_size = (32, 15)
-        self.wheel_space = 18
-        self.wheel_place = 86
-        self.wheel_speed = 18   #the lower the faster and wheel_speed <= 18
+        self.wheel_speed = 18  # the lower the faster and wheel_speed <= 18
         self.player_x = screen_width // 2 - self.player_width // 2
 
     def update(self):
@@ -265,9 +263,9 @@ class Player:
             self.player_x + self.wheel_size[0],
             screen_height
             - self.player_height
-            + self.wheel_place
-            + self.wheel_space
-            - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed-1),
+            + 86
+            + 18
+            - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1),
             2,
             48,
             160,
@@ -279,10 +277,9 @@ class Player:
             self.player_x + self.wheel_size[0],
             screen_height
             - self.player_height
-            + self.wheel_place
-            + (2*self.wheel_space)
-            - 17 * (pyxel.frame_count % self.wheel_speed) /
-            (self.wheel_speed-1),
+            + 86
+            + 2 * 18
+            - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1),
             2,
             48,
             160,
@@ -290,15 +287,14 @@ class Player:
             self.wheel_size[1],
         )
         # third tire tread (bottom)
-        if 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed-1) > 9 :
+        if 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1) > 9:
             pyxel.blt(
                 self.player_x + self.wheel_size[0],
                 screen_height
                 - self.player_height
-                + self.wheel_place
-                + 3 * (self.wheel_space)
-                - 17 * (pyxel.frame_count % self.wheel_speed)
-                / (self.wheel_speed-1),
+                + 86
+                + 3 * 18
+                - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1),
                 2,
                 48,
                 160,
