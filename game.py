@@ -114,9 +114,9 @@ class Enemies:
             self.y,
             1,
             40,
-            self.graphicsPositionY,
             8,
-            60,
+            63,
+            31,
             pyxel.COLOR_BLACK,
         )
 
