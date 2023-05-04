@@ -108,6 +108,17 @@ class Enemies:
     def draw(self):
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 10), pyxel.COLOR_BLACK)
         pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 8), pyxel.COLOR_WHITE)
+        
+        pyxel.blt(
+            self.x,
+            self.y,
+            1,
+            40,
+            self.graphicsPositionY,
+            8,
+            60,
+            pyxel.COLOR_BLACK,
+        )
 
 
 class TimeOfDay:
