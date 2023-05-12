@@ -17,17 +17,19 @@ class Game:
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
         self.player = Player()
+        self.enemies = Enemies(self.player)
         pyxel.run(self.update, self.draw)
 
     def update(self):
-        self.road.update()
         self.timeOfDay.update()
         self.milestone.update()
         self.player.update()
+        self.enemies.update()
 
     def draw(self):
         pyxel.cls(pyxel.COLOR_LIME)
         self.road.draw()
+        self.enemies.draw()
         self.timeOfDay.draw()
         self.milestone.draw()
         self.player.draw()
@@ -37,7 +39,6 @@ class Road:
     def __init__(self):
         self.overflowX = 200
         self.line_thickness = 40
-        self.enemies = Enemies()
 
     def createRoad(self):
         pyxel.tri(
@@ -73,18 +74,15 @@ class Road:
                     pyxel.COLOR_WHITE,
                 )
 
-    def update(self):
-        self.enemies.update()
-
     def draw(self):
         self.createRoad()
         self.outlineRoad()
         self.createLanes()
-        self.enemies.draw()
 
 
 class Enemies:
-    def __init__(self, scaling_factor=0.05):
+    def __init__(self, player, scaling_factor=0.05):
+        self.player = player
         (self.x, self.y) = convergence
         self.scaling_factor = scaling_factor
         self.trajectory = randint(-1, 1)
@@ -100,25 +98,35 @@ class Enemies:
     def update(self):
         self.y += self.increaseSpeed(self.y, 1)
         self.x += self.trajectory * self.increaseSpeed(self.y, 1)
-        if self.y > screen_height + self.calculateRadius(self.y, 5):
+        if self.y > screen_height + self.calculateRadius(self.y, 8):
             self.y = convergence[1]
             self.x = convergence[0]
             self.trajectory = randint(-1, 1)
 
-    def draw(self):
-        pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 10), pyxel.COLOR_BLACK)
-        pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 8), pyxel.COLOR_WHITE)
-        
-        pyxel.blt(
-            self.x,
-            self.y,
-            1,
-            40,
-            8,
-            63,
-            31,
-            pyxel.COLOR_BLACK,
+        # Check collision with player
+        if self.checkCollision():
+            self.player.onCollision()
+
+    def checkCollision(self):
+        # Calculate the radius of the ball used in the collision detection
+        radius = self.calculateRadius(self.y, 8)
+
+        # Calculate the dimensions of the player rectangle used in the collision detection
+        x = self.player.x + self.player.width * 0.3
+        y = self.player.y + self.player.height * 0.3
+        width = self.player.width * 0.4
+        height = self.player.height * 0.4
+
+        # Check if the ball collides with the player
+        return (
+            self.x + radius >= x
+            and self.x - radius <= x + width
+            and self.y + radius >= y
+            and self.y - radius <= y + height
         )
+
+    def draw(self):
+        pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 8), pyxel.COLOR_WHITE)
 
 
 class TimeOfDay:
@@ -228,39 +236,39 @@ class Milestones:
 
 class Player:
     def __init__(self):
-        self.player_width = 95
-        self.player_height = 150
+        self.width = 95
+        self.height = 150
         self.player_speed = 10
         self.wheel_size = (32, 15)
         self.wheel_speed = 18  # the lower the faster and wheel_speed <= 18
-        self.player_x = screen_width // 2 - self.player_width // 2
+        self.x = screen_width // 2 - self.width // 2
+        self.y = screen_height - self.height
 
     def update(self):
-        if pyxel.btn(pyxel.KEY_LEFT) and self.player_x > 5:
-            self.player_x -= self.player_speed
-        if (
-            pyxel.btn(pyxel.KEY_RIGHT)
-            and self.player_x < screen_width - self.player_width - 5
-        ):
-            self.player_x += self.player_speed
+        if pyxel.btn(pyxel.KEY_LEFT) and self.x > 5:
+            self.x -= self.player_speed
+        if pyxel.btn(pyxel.KEY_RIGHT) and self.x < screen_width - self.width - 5:
+            self.x += self.player_speed
+
+    def onCollision(self):
+        pyxel.quit()
 
     def draw(self):
         # motorcycle
         pyxel.blt(
-            self.player_x,
-            screen_height - self.player_height,
+            self.x,
+            self.y,
             2,
             16,
             10,
-            self.player_width,
-            self.player_height,
+            self.width,
+            self.height,
             pyxel.COLOR_PINK,
         )
         # first tire tread (top)
         pyxel.blt(
-            self.player_x + self.wheel_size[0],
-            screen_height
-            - self.player_height
+            self.x + self.wheel_size[0],
+            self.y
             + 86
             + 18
             - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1),
@@ -272,9 +280,8 @@ class Player:
         )
         # second tire tread (middle)
         pyxel.blt(
-            self.player_x + self.wheel_size[0],
-            screen_height
-            - self.player_height
+            self.x + self.wheel_size[0],
+            self.y
             + 86
             + 2 * 18
             - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1),
@@ -287,9 +294,8 @@ class Player:
         # third tire tread (bottom)
         if 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1) > 9:
             pyxel.blt(
-                self.player_x + self.wheel_size[0],
-                screen_height
-                - self.player_height
+                self.x + self.wheel_size[0],
+                self.y
                 + 86
                 + 3 * 18
                 - 17 * (pyxel.frame_count % self.wheel_speed) / (self.wheel_speed - 1),
