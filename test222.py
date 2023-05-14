@@ -84,6 +84,8 @@ class Sound :
         self.sound = sound()
         if collision == true:
             pyxel.sound(3).speed = 30
+            pyxel.sound(5).speed = 20
+            pyxel.music(5).speed = 30
 
 class Enemies:
     def __init__(self, player, scaling_factor=0.05):
