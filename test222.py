@@ -86,12 +86,6 @@ class Sound :
             pyxel.sound(3).speed = 30
 
 
-class Enemies:
-    def __init__(self, player, scaling_factor=0.05):
-        self.player = player
-        (self.x, self.y) = convergence
-        self.scaling_factor = scaling_factor
-        self.trajectory = randint(-1, 1)
 
     def calculateRadius(self, y, initial_size):
         y -= convergence[1]
