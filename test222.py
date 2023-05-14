@@ -34,6 +34,7 @@ class Game:
         self.milestone.draw()
         self.player.draw()
 
+class sound()
 
 class Road:
     def __init__(self):
