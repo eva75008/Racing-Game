@@ -251,7 +251,7 @@ class Player:
             self.x += self.player_speed
 
     def onCollision(self):
-        pyxel.quit()
+        pyxel.quit()   #animation de fin de jeu
 
     def draw(self):
         # motorcycle
