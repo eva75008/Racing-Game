@@ -66,6 +66,20 @@ class Road:
                 )
 
     def createLanes(self):
+        """for x in range(self.line_thickness):
+            line(
+                x1,
+                y1,
+                x2,
+                y2,
+                pyxel.COLOR_WHITE,
+            )
+"""
+
+
+
+
+
         for n in range(1, 3):
             for x in range(self.line_thickness):
                 pyxel.line(
@@ -200,8 +214,7 @@ class Milestones:
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
-        self.size = (self.sizes_coeff*(abs(self.startx - self.Xo) / (screen_width/2)))
-        print(self.startx)
+        self.size = self.sizes_coeff*(abs(self.startx - self.Xo) / (screen_width/2))
 
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
         self.startx = (self.starty-200)/self.coeff + self.Xo - (30)
@@ -210,7 +223,7 @@ class Milestones:
     def draw(self):
         self.directions()
 
-        if self.starty > 210:
+        if self.starty > 220:
             pyxel.rect(
                     self.startx,
                     self.starty,
