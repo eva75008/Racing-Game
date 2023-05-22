@@ -80,7 +80,6 @@ class Road:
     
     def directions(self, Xf):
         self.Xf = Xf
-        self.__init__()
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
