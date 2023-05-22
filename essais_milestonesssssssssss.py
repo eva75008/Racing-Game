@@ -97,24 +97,20 @@ class Road:
         self.createRoad()
         #self.directions()
 
-        if self.starty + 50 < screen_height: 
-            self.directions(self.Xg)
-            for n in range(1, 3):
-                for x in range(self.line_thickness):
-                    pyxel.line(
-                        self.startx
-                        + ((self.line_thickness if n == 2 else -self.line_thickness)),
-                        self.starty,
-                         self.endX + x,
-                         self.endY,
-                        pyxel.COLOR_WHITE,
-                    )
-                self.directions(self.Xd)
-        else:
-            self.__init__()
+        self.directions(self.Xg)
+        for n in range(1, 3):
+            for x in range(self.line_thickness):
+                pyxel.line(
+                    self.startx
+                    + ((self.line_thickness if n == 2 else -self.line_thickness)),
+                    self.starty,
+                     self.endX + x,
+                     self.endY,
+                    pyxel.COLOR_WHITE,
+                )
+            self.directions(self.Xd)
 
-        
-        
+
         
         
         
