@@ -79,7 +79,7 @@ class Road:
     def directions(self, Xf):
         self.Xf = Xf
         if self.starty >= screen_height-100:
-            self.__init__(self.Xf)
+            self.__init__()
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
