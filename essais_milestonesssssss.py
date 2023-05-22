@@ -59,7 +59,7 @@ class Road:
         self.overflowX = 200
         self.line_thickness = 40
         
-        self.endY = self.starty + self.size
+        self.endY = self.starty
 
 
     def update(self):
