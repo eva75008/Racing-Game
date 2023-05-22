@@ -269,9 +269,13 @@ class Player:
         self.y = screen_height - self.height
 
     def update(self):
-        if pyxel.btn(pyxel.KEY_LEFT) and self.x > 5:
+        if pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.KEY_Q) and self.x > 5:
             self.x -= self.player_speed
-        if pyxel.btn(pyxel.KEY_RIGHT) and self.x < screen_width - self.width - 5:
+        if (
+            pyxel.btn(pyxel.KEY_RIGHT)
+            or pyxel.btn(pyxel.KEY_D)
+            and self.x < screen_width - self.width - 5
+        ):
             self.x += self.player_speed
 
     def onCollision(self):
