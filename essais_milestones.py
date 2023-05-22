@@ -76,7 +76,7 @@ class Road:
         )
     
     
-    def directions(self):
+    def directions(self, Xf):
         if self.starty >= screen_height-100:
             self.__init__(self.Xf)
 
@@ -90,9 +90,10 @@ class Road:
 
     def draw(self):
         self.createRoad()
-        self.directions()
+        #self.directions()
 
         if self.starty < screen_height: 
+            self.directions(self.Xg)
             for n in range(1, 3):
                 for x in range(self.line_thickness):
                     pyxel.line(
@@ -103,6 +104,7 @@ class Road:
                         convergence[1],
                         pyxel.COLOR_WHITE,
                     )
+                self.directions(self.Xd)
 
         
         
