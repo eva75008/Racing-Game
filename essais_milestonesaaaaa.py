@@ -104,8 +104,8 @@ class Road:
                     self.startx
                     + ((self.line_thickness if n == 2 else -self.line_thickness)),
                     self.starty,
-                     self.endX + x,
-                     self.starty + self.size,
+                     self.startx + 20,
+                     self.starty + 20,
                     pyxel.COLOR_WHITE,
                 )
             self.directions(self.Xd)
