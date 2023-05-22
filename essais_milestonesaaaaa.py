@@ -91,7 +91,7 @@ class Road:
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
         self.startx = (self.starty-200)/self.coeff + self.Xo
         
-        self.endX = (self.starty + self.size -200)/self.coeff + self.Xo
+        self.endX = (self.starty - self.size -200)/self.coeff + self.Xo
 
 
     def draw(self):
@@ -104,8 +104,8 @@ class Road:
                     self.startx
                     + ((self.line_thickness if n == 2 else -self.line_thickness)),
                     self.starty,
-                     self.startx + 20,
-                     self.starty + 20,
+                     self.endX,
+                     self.starty - self.size,
                     pyxel.COLOR_WHITE,
                 )
             self.directions(self.Xd)
