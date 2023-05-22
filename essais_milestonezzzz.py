@@ -77,6 +77,16 @@ class Road:
             pyxel.COLOR_GRAY,
         )
     
+    def outlineRoad(self):
+        for n in range(2):
+            for x in range(self.line_thickness):
+                pyxel.line(
+                    (-self.overflowX if n else screen_width + self.overflowX),
+                    screen_height + x,
+                    convergence[0],
+                    convergence[1],
+                    pyxel.COLOR_WHITE,
+                )
     
     def directions(self, Xf):
         self.Xf = Xf
@@ -91,19 +101,19 @@ class Road:
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
         self.startx = (self.starty-200)/self.coeff + self.Xo
         
-        self.endY = self.starty - self.size
-        self.endX = (self.endY -200)/self.coeff + self.Xo
+        self.endY = self.starty + self.size
+        self.endX = (self.endY - 200)/self.coeff + self.Xo
 
 
     def draw(self):
         self.createRoad()
+        self.outlineRoad()
 
         self.directions(self.Xg)
         for n in range(1, 3):
             for x in range(self.line_thickness):
                 pyxel.line(
-                    self.startx
-                    + ((self.line_thickness if n == 2 else -self.line_thickness)),
+                    self.startx,
                     self.starty,
                      self.endX + x,
                      self.endY,
