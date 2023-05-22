@@ -1,12 +1,12 @@
 import pyxel
 from math import sin, radians, sqrt
-from random import randint
+from random import uniform
 
 
 screen_width = 720
 screen_height = 480
-convergence = (screen_width // 2, 200)
-sky_height = screen_height // 2
+convergence = (screen_width / 2, 200)
+sky_height = screen_height / 2
 
 
 class Game:
@@ -16,15 +16,25 @@ class Game:
         self.road = Road()
         self.milestone = Milestones()
         self.timeOfDay = TimeOfDay()
-        self.player = Player()
+        self.score = 0
+        self.player = Player(self)
+        self.enemy_timer = 0
         self.enemies = Enemies(self.player)
         pyxel.run(self.update, self.draw)
 
+    def init_score(self):
+        self.score = 0
+
     def update(self):
+        self.score += 0.1
         self.timeOfDay.update()
         self.milestone.update()
         self.player.update()
         self.enemies.update()
+        self.enemy_timer += 1
+        if self.enemy_timer >= 20:
+            self.enemies.create_enemy()
+            self.enemy_timer = 0
 
     def draw(self):
         pyxel.cls(pyxel.COLOR_LIME)
@@ -33,6 +43,7 @@ class Game:
         self.timeOfDay.draw()
         self.milestone.draw()
         self.player.draw()
+        pyxel.text(10, 10, f"Score: {int(self.score)}", pyxel.COLOR_WHITE)
 
 
 class Road:
@@ -81,35 +92,41 @@ class Road:
 
 
 class Enemies:
-    def __init__(self, player, scaling_factor=0.05):
+    def __init__(self, player, number=3):
         self.player = player
-        (self.x, self.y) = convergence
-        self.scaling_factor = scaling_factor
-        self.trajectory = randint(-1, 1)
+        self.enemies = []
+        self.scaling_factor = 0.05
 
-    def calculateRadius(self, y, initial_size):
+    def calculate_radius(self, y, initial_size):
         y -= convergence[1]
         return self.scaling_factor * y + initial_size
 
-    def increaseSpeed(self, y, initial_speed):
+    def increase_speed(self, y, initial_speed):
         y -= convergence[1] - 1
         return initial_speed * 2 ** (y / 60)
 
+    def create_enemy(self):
+        enemy = {
+            "x": convergence[0],
+            "y": convergence[1],
+            "trajectory": uniform(1.6, -1.6),
+        }
+        self.enemies.append(enemy)
+
     def update(self):
-        self.y += self.increaseSpeed(self.y, 1)
-        self.x += self.trajectory * self.increaseSpeed(self.y, 1)
-        if self.y > screen_height + self.calculateRadius(self.y, 8):
-            self.y = convergence[1]
-            self.x = convergence[0]
-            self.trajectory = randint(-1, 1)
+        for enemy in self.enemies:
+            enemy["y"] += self.increase_speed(enemy["y"], 1)
+            enemy["x"] += enemy["trajectory"] * self.increase_speed(enemy["y"], 1)
+            if enemy["y"] > screen_height + self.calculate_radius(enemy["y"], 8):
+                self.enemies.remove(enemy)
 
-        # Check collision with player
-        if self.checkCollision():
-            self.player.onCollision()
+            # Check collision with player
+            if self.check_collision(enemy):
+                self.player.onCollision()
 
-    def checkCollision(self):
+    def check_collision(self, enemy):
         # Calculate the radius of the ball used in the collision detection
-        radius = self.calculateRadius(self.y, 8)
+        radius = self.calculate_radius(enemy["y"], 8)
 
         # Calculate the dimensions of the player rectangle used in the collision detection
         x = self.player.x + self.player.width * 0.3
@@ -119,14 +136,20 @@ class Enemies:
 
         # Check if the ball collides with the player
         return (
-            self.x + radius >= x
-            and self.x - radius <= x + width
-            and self.y + radius >= y
-            and self.y - radius <= y + height
+            enemy["x"] + radius >= x
+            and enemy["x"] - radius <= x + width
+            and enemy["y"] + radius >= y
+            and enemy["y"] - radius <= y + height
         )
 
     def draw(self):
-        pyxel.circ(self.x, self.y, self.calculateRadius(self.y, 8), pyxel.COLOR_WHITE)
+        for enemy in self.enemies:
+            pyxel.circ(
+                enemy["x"],
+                enemy["y"],
+                self.calculate_radius(enemy["y"], 8),
+                pyxel.COLOR_WHITE,
+            )
 
 
 class TimeOfDay:
@@ -235,7 +258,8 @@ class Milestones:
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         self.width = 95
         self.height = 150
         self.player_speed = 10
@@ -251,7 +275,8 @@ class Player:
             self.x += self.player_speed
 
     def onCollision(self):
-        pyxel.quit()   #animation de fin de jeu
+        pyxel.play(2, 2)
+        self.game.init_score()
 
     def draw(self):
         # motorcycle
