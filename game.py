@@ -20,6 +20,7 @@ class Game:
         self.player = Player(self)
         self.enemy_timer = 0
         self.enemies = Enemies(self.player)
+        pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
 
     def init_score(self):
