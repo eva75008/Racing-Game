@@ -58,6 +58,8 @@ class Road:
         
         self.overflowX = 200
         self.line_thickness = 40
+        
+        self.endY = self.starty + self.size
 
 
     def update(self):
@@ -78,7 +80,7 @@ class Road:
     
     def directions(self, Xf):
         self.Xf = Xf
-        if self.starty >= screen_height-100:
+        if self.starty >= self.Yg + 50:
             self.__init__()
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
@@ -87,6 +89,9 @@ class Road:
 
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
         self.startx = (self.starty-200)/self.coeff + self.Xo
+        
+        self.endY = self.starty + self.size
+        self.endX = (self.endY-200)/self.coeff + self.Xo
 
 
     def draw(self):
@@ -101,8 +106,8 @@ class Road:
                         self.startx
                         + ((self.line_thickness if n == 2 else -self.line_thickness)),
                         self.starty,
-                        convergence[0],
-                        convergence[1],
+                         self.endX,
+                         self.endY,
                         pyxel.COLOR_WHITE,
                     )
                 self.directions(self.Xd)
