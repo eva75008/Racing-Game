@@ -80,6 +80,9 @@ class Road:
     
     def directions(self, Xf):
         self.Xf = Xf
+        
+        if self.starty > screen_height +50:
+            self.__init__()
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
@@ -94,7 +97,6 @@ class Road:
 
     def draw(self):
         self.createRoad()
-        #self.directions()
 
         self.directions(self.Xg)
         for n in range(1, 3):
