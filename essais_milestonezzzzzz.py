@@ -115,8 +115,8 @@ class Road:
                 pyxel.line(
                     self.startx,
                     self.starty,
-                    self.Xo,
-                    self.Yo,
+                    self.Xo - self.size,
+                    self.Yo * self.coeff,
                     #self.endX + x,
                     #self.endY,
                     pyxel.COLOR_WHITE,
