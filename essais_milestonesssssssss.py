@@ -80,8 +80,7 @@ class Road:
     
     def directions(self, Xf):
         self.Xf = Xf
-        if self.starty >= self.Yg:
-            self.__init__()
+        self.__init__()
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
@@ -111,6 +110,8 @@ class Road:
                         pyxel.COLOR_WHITE,
                     )
                 self.directions(self.Xd)
+          else:
+            self.__init__()
 
         
         
