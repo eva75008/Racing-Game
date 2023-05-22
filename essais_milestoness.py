@@ -40,7 +40,7 @@ class Game:
 
         
 class Road:
-    def __init__(self, Xf):
+    def __init__(self):
         self.Xo = screen_width // 2
         self.Yo = 200
         self.max_height = 64
@@ -54,7 +54,7 @@ class Road:
 
         self.startx = self.Xo
         self.starty = self.Yo
-        self.Xf = Xf
+         #self.Xf = self.Xg
         
         self.overflowX = 200
         self.line_thickness = 40
@@ -77,6 +77,7 @@ class Road:
     
     
     def directions(self, Xf):
+        self.Xf = Xf
         if self.starty >= screen_height-100:
             self.__init__(self.Xf)
 
@@ -85,7 +86,7 @@ class Road:
         self.size = self.sizes_coeff*(abs(self.startx - self.Xo) / (screen_width/2))
 
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
-        self.startx = (self.starty-200)/self.coeff + self.Xo - (30)
+        self.startx = (self.starty-200)/self.coeff + self.Xo
 
 
     def draw(self):
@@ -97,9 +98,9 @@ class Road:
             for n in range(1, 3):
                 for x in range(self.line_thickness):
                     pyxel.line(
-                        screen_width / 3 * n
+                        self.startX
                         + ((self.line_thickness if n == 2 else -self.line_thickness)),
-                        screen_height + x,
+                        self.startY,
                         convergence[0],
                         convergence[1],
                         pyxel.COLOR_WHITE,
