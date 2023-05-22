@@ -115,8 +115,10 @@ class Road:
                 pyxel.line(
                     self.startx,
                     self.starty,
-                     self.endX + x,
-                     self.endY,
+                    self.Xo,
+                    self.Yo,
+                    #self.endX + x,
+                    #self.endY,
                     pyxel.COLOR_WHITE,
                 )
             self.directions(self.Xd)
