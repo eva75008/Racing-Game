@@ -100,7 +100,7 @@ class Road:
                     pyxel.line(
                         self.startx
                         + ((self.line_thickness if n == 2 else -self.line_thickness)),
-                        self.startY,
+                        self.starty,
                         convergence[0],
                         convergence[1],
                         pyxel.COLOR_WHITE,
