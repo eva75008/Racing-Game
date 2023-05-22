@@ -44,7 +44,9 @@ class Road:
         self.Xo = screen_width // 2
         self.Yo = 200
         self.max_height = 64
+        self.Xg = screen_width / 3
         self.Yg = screen_height
+        self.Xd = (screen_width * 2) / 3
         self.Yd = screen_height
         self.l = self.Xd- self.Xg
         #self.sizes_coeff = self.min_width
