@@ -38,7 +38,84 @@ class Game:
         self.player.draw()
 
 
+        
 class Road:
+    def __init__(self):
+        self.Xo = screen_width // 2
+        self.Yo = 200
+        self.max_height = 64
+        self.Xg = screen_width / 3
+        self.Yg = screen_height
+        self.Xd = (screen_width * 2) / 3
+        self.Yd = screen_height
+        self.l = self.Xd- self.Xg
+        #self.sizes_coeff = self.min_width
+        self.sizes_coeff = 18
+
+        self.startx = self.Xo
+        self.starty = self.Yo
+         #self.Xf = self.Xg
+        
+        self.overflowX = 200
+        self.line_thickness = 40
+        
+        self.endY = self.starty
+
+
+    def update(self):
+        pass
+
+    
+    def createRoad(self):
+        pyxel.tri(
+            -self.overflowX,
+            screen_height,
+            screen_width + self.overflowX,
+            screen_height,
+            self.Xo,
+            self.Yo,
+            pyxel.COLOR_GRAY,
+        )
+    
+    
+    def directions(self, Xf):
+        self.Xf = Xf
+        self.__init__()
+
+        self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
+
+        self.size = self.sizes_coeff*(abs(self.startx - self.Xo) / (screen_width/2))
+
+        self.starty += 7 * ((self.starty-199)/(screen_height-200))
+        self.startx = (self.starty-200)/self.coeff + self.Xo
+        
+        self.endY = self.starty + self.size
+        self.endX = (self.endY-200)/self.coeff + self.Xo
+
+
+    def draw(self):
+        self.createRoad()
+        #self.directions()
+
+        self.directions(self.Xg)
+        for n in range(1, 3):
+            for x in range(self.line_thickness):
+                pyxel.line(
+                    self.startx
+                    + ((self.line_thickness if n == 2 else -self.line_thickness)),
+                    self.starty,
+                     self.endX + x,
+                     self.endY,
+                    pyxel.COLOR_WHITE,
+                )
+            self.directions(self.Xd)
+
+
+        
+        
+        
+        
+class Roads:
     def __init__(self):
         self.overflowX = 200
         self.line_thickness = 40
@@ -186,6 +263,7 @@ class TimeOfDay:
             pyxel.COLOR_BLACK,
         )
 
+        
 
 class Milestones:
     def __init__(self, Xf):
@@ -241,79 +319,8 @@ class Milestones:
             )
 
 
-
-
-
-
-
-
-
-
-
-
-class Milestone:
-    def __init__(self):
-        self.min_height = 8
-        self.min_width = 2
-        self.scaling_step = 1.5
-        self.start = 10
-
-    def update(self):
-        pass
-
-    def findSlope(self, x0, y0):
-        return (y0 - convergence[1]) / (x0 - convergence[0])
-
-    def findDistance(self, x0, slope):
-        return abs(sqrt(slope**2 + 1) * (x0 - convergence[0]))
-
-    def findX(self, y0, slope):
-        return (y0 - convergence[1]) / slope + convergence[0]
-
-    def drawLine(self, start_x, slope, is_right):
-        total_distance = self.findDistance(self.start, slope)
-        cper_dist = self.findDistance(self.findX(sky_height, slope), slope)
-        scaling_factor = 1
-        distance = cper_dist
-        while distance < total_distance:
-            if is_right:
-                x = distance / (slope**2 + 1) ** (1 / 2) + convergence[0]
-            else:
-                x = -distance / (slope**2 + 1) ** (1 / 2) + convergence[0]
-            y = slope * (x - convergence[0]) + convergence[1]
-            if is_right:
-                x_align_correction = self.min_width * scaling_factor
-            else:
-                x_align_correction = 0
-            pyxel.rect(
-                x - x_align_correction,
-                y - self.min_height * scaling_factor,
-                self.min_width * scaling_factor,
-                self.min_height * scaling_factor,
-                pyxel.COLOR_RED,
-            )
-            pyxel.rect(
-                x - x_align_correction,
-                y - (self.min_height - 1) * scaling_factor,
-                self.min_width * scaling_factor,
-                scaling_factor,
-                pyxel.COLOR_WHITE,
-            )
-            distance += (total_distance - cper_dist) / 8 * scaling_factor
-            scaling_factor += self.scaling_step
-
-    def right(self):
-        slope = self.findSlope(screen_width - self.start, 375)
-        self.drawLine(screen_width - self.start, slope, True)
-
-    def left(self):
-        slope = self.findSlope(self.start, 375)
-        self.drawLine(self.start, slope, False)
-
-    def draw(self):
-        self.right()
-        self.left()
-
+            
+            
 
 class Player:
     def __init__(self):
