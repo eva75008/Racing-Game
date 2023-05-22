@@ -38,7 +38,77 @@ class Game:
         self.player.draw()
 
 
+        
 class Road:
+    def __init__(self, Xf):
+        self.Xo = screen_width // 2
+        self.Yo = 200
+        self.max_height = 64
+        self.Yg = screen_height
+        self.Yd = screen_height
+        self.l = self.Xd- self.Xg
+        #self.sizes_coeff = self.min_width
+        self.sizes_coeff = 18
+
+        self.startx = self.Xo
+        self.starty = self.Yo
+        self.Xf = Xf
+        
+        self.overflowX = 200
+        self.line_thickness = 40
+
+
+    def update(self):
+        pass
+
+    
+    def createRoad(self):
+        pyxel.tri(
+            -self.overflowX,
+            screen_height,
+            screen_width + self.overflowX,
+            screen_height,
+            self.Xo,
+            self.Yo,
+            pyxel.COLOR_GRAY,
+        )
+    
+    
+    def directions(self):
+        if self.starty >= screen_height-100:
+            self.__init__(self.Xf)
+
+        self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
+
+        self.size = self.sizes_coeff*(abs(self.startx - self.Xo) / (screen_width/2))
+
+        self.starty += 7 * ((self.starty-199)/(screen_height-200))
+        self.startx = (self.starty-200)/self.coeff + self.Xo - (30)
+
+
+    def draw(self):
+        self.createRoad()
+        self.directions()
+
+        if self.starty < screen_height: 
+            for n in range(1, 3):
+                for x in range(self.line_thickness):
+                    pyxel.line(
+                        screen_width / 3 * n
+                        + ((self.line_thickness if n == 2 else -self.line_thickness)),
+                        screen_height + x,
+                        convergence[0],
+                        convergence[1],
+                        pyxel.COLOR_WHITE,
+                    )
+
+        
+        
+        
+        
+        
+        
+class Roads:
     def __init__(self):
         self.overflowX = 200
         self.line_thickness = 40
