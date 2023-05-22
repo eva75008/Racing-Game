@@ -80,7 +80,9 @@ class Road:
     
     def directions(self, Xf):
         self.Xf = Xf
-        self.__init__()
+        
+        if self.starty > screen_height +50:
+            self.__init__()
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
@@ -89,13 +91,11 @@ class Road:
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
         self.startx = (self.starty-200)/self.coeff + self.Xo
         
-        self.endY = self.starty + self.size
-        self.endX = (self.endY-200)/self.coeff + self.Xo
+        self.endX = (self.starty - self.size -200)/self.coeff + self.Xo
 
 
     def draw(self):
         self.createRoad()
-        #self.directions()
 
         self.directions(self.Xg)
         for n in range(1, 3):
@@ -104,8 +104,8 @@ class Road:
                     self.startx
                     + ((self.line_thickness if n == 2 else -self.line_thickness)),
                     self.starty,
-                     self.endX + x,
-                     self.endY,
+                     self.endX,
+                     self.starty - self.size,
                     pyxel.COLOR_WHITE,
                 )
             self.directions(self.Xd)
