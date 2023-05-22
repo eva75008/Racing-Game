@@ -98,7 +98,7 @@ class Road:
             for n in range(1, 3):
                 for x in range(self.line_thickness):
                     pyxel.line(
-                        self.startX
+                        self.startx
                         + ((self.line_thickness if n == 2 else -self.line_thickness)),
                         self.startY,
                         convergence[0],
