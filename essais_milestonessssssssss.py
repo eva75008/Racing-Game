@@ -110,7 +110,7 @@ class Road:
                         pyxel.COLOR_WHITE,
                     )
                 self.directions(self.Xd)
-          else:
+        else:
             self.__init__()
 
         
