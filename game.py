@@ -275,7 +275,6 @@ class Player:
     def onCollision(self):
         pyxel.play(2, 2)
         self.game.init_score()
-        pyxel.quit
 
     def draw(self):
         # motorcycle
