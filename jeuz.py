@@ -276,7 +276,7 @@ class Player:
         while not pyxel.btn(KEY_SPACE):
             pyxel.cls(8)
             text(320, 210, "Click on SPACE to RESTART", 7)
-            pyxel.run(update, draw)
+   
             
             
     def onCollision(self):
