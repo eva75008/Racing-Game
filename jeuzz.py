@@ -30,8 +30,11 @@ class Game:
     def update(self):
         self.score += 0.1
         self.timeOfDay.update()
+<<<<<<< Updated upstream:jeuzz.py
         self.milestonel.update()
         self.milestoner.update()
+=======
+>>>>>>> Stashed changes:game.py
         self.player.update()
         self.enemies.update()
         self.enemy_timer += 1
@@ -215,20 +218,67 @@ class Milestones:
         self.Xf = Xf
 
 
+<<<<<<< Updated upstream:jeuzz.py
     def update(self):
         pass
 
     def directions(self):
         if self.starty >= screen_height-100:
             self.__init__(self.Xf)
+=======
+    def findSlope(self, x0, y0):
+        return (y0 - convergence[1]) / (x0 - convergence[0])
+>>>>>>> Stashed changes:game.py
 
         self.coeff = (self.Yg-self.Yo)/(self.Xf-self.Xo)
 
         self.size = self.sizes_coeff*(abs(self.startx - self.Xo) / (screen_width/2))
 
+<<<<<<< Updated upstream:jeuzz.py
         self.starty += 7 * ((self.starty-199)/(screen_height-200))
         self.startx = (self.starty-200)/self.coeff + self.Xo - (30)
 
+=======
+    def drawLine(self, slope, is_right):
+        total_distance = self.findDistance(self.start, slope)
+        cper_dist = self.findDistance(self.findX(sky_height, slope), slope)
+        scaling_factor = 1
+        distance = cper_dist
+        while distance < total_distance:
+            if is_right:
+                x = distance / (slope**2 + 1) ** (1 / 2) + convergence[0]
+            else:
+                x = -distance / (slope**2 + 1) ** (1 / 2) + convergence[0]
+            y = slope * (x - convergence[0]) + convergence[1]
+            if is_right:
+                x_align_correction = self.min_width * scaling_factor
+            else:
+                x_align_correction = 0
+            pyxel.rect(
+                x - x_align_correction,
+                y - self.min_height * scaling_factor,
+                self.min_width * scaling_factor,
+                self.min_height * scaling_factor,
+                pyxel.COLOR_RED,
+            )
+            pyxel.rect(
+                x - x_align_correction,
+                y - (self.min_height - 1) * scaling_factor,
+                self.min_width * scaling_factor,
+                scaling_factor,
+                pyxel.COLOR_WHITE,
+            )
+            distance += (total_distance - cper_dist) / 8 * scaling_factor
+            scaling_factor += self.scaling_step
+
+    def right(self):
+        slope = self.findSlope(screen_width - self.start, 375)
+        self.drawLine(slope, True)
+
+    def left(self):
+        slope = self.findSlope(self.start, 375)
+        self.drawLine(slope, False)
+>>>>>>> Stashed changes:game.py
 
     def draw(self):
         self.directions()
@@ -266,10 +316,15 @@ class Player:
         if (pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.KEY_Q)) and self.x > 5:
             self.x -= self.player_speed
         if (
+<<<<<<< Updated upstream:jeuzz.py
             (pyxel.btn(pyxel.KEY_RIGHT)
             or pyxel.btn(pyxel.KEY_D))
             and self.x < screen_width - self.width - 5
         ):
+=======
+            pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.KEY_D)
+        ) and self.x < screen_width - self.width - 5:
+>>>>>>> Stashed changes:game.py
             self.x += self.player_speed
 
             
