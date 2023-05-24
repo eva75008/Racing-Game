@@ -273,12 +273,11 @@ class Player:
             self.x += self.player_speed
 
     def onCollision(self):
-        pyxel.quit()
+        pyxel.play(2, 2)
+        self.game.init_score()
         while not pyxel.btn(KEY_SPACE):
             pyxel.cls(8)
             text(320, 210, "Click on SPACE to RESTART", 7)
-        pyxel.play(2, 2)
-        self.game.init_score()
         
 
     def draw(self):
